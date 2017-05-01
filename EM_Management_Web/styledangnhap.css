@@ -1,0 +1,86 @@
+.main0{
+	width: 1000px;
+	height: 205px;
+	
+	
+}
+table, tr, td {
+    border: 10px;
+    border-style: hidden;
+}
+input[type=text], select, textarea {
+    width: 360px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+input[type=password] {
+    width: 360px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+.container {
+	
+	margin-left: 300px;
+    border-radius: 5px;
+    background-color: white;
+   	width: 400px;
+	height: 400px;
+}
+
+*{
+	 padding: 0px;
+	margin: 0px;
+}
+.dropdown:hover .dropbtn {
+    background-color: #4396dc;
+}

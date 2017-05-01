@@ -1,0 +1,212 @@
+
+*{
+	 padding: 0px;
+	margin: 0px;
+}
+.body1{
+	width: 50px;
+	height: 50px;
+	background-color: white;
+
+}
+.ABCD{
+	width: 999px;
+	height: 30px;
+	box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+   	color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+   
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+	background-color:#014590;
+	
+	border-top: 0px;
+}
+.abc{
+	width: 1003px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+   
+    background-repeat: no-repeat;
+   
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+.congcu{
+	height:58px;
+	width:998px;
+	background-color: #014590;
+}
+.body2{
+	width: 220px;
+	height: 220px;
+	background-color: white;
+	
+}
+.body3{
+	
+	width: 588px;
+	height: 384px;
+	background-color: white;
+	
+}
+
+
+body{
+	
+	background-color: white;
+	
+}
+
+.main{
+	float: inherit;
+	height:1322px;
+	width:1002px;
+	background-color:White;
+	margin:30px auto 30px auto;
+	
+}
+div{
+	float:left;
+	position: relative;
+	
+}
+.head1{
+	width: 200px;
+	height: 120px;
+	background-color: white;
+	
+}
+.head2{
+	
+	width: 800px;
+	height: 120px;
+	background-color: white;
+	
+}
+.body{
+	width: 1003px;
+	height: 2000px;
+	
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+   
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+.ass{
+	width: 1003px;
+	height: 100px;
+	box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+   
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+   
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+	background-color:#95A5A6;
+	
+	border-top: 0px;
+}
+
+.dropbtn1 {
+    background-color: #014590;
+    color: white;
+    padding: 3px;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+	margin-top: 49px;
+	margin-right: -5px;
+}
+.khoasanpham{
+	margin-left: px;
+	margin-top: 180px;
+	
+}
+
+.dangnhap{
+	margin-right: 5px;
+	background-color: white;
+	float: right;
+}
+
+
+
+/* Dropdown Button */
+.maunen{
+	background-color:  #014590;
+	width: 1000px;
+    height: 58px;
+	
+	
+}
+.chuchay{
+	width: 970px;
+	height: 20px;
+	font-size: 16px;
+	margin-left: 10px;
+	margin-top: 5px;
+	
+}
+
+
+.dropbtn {
+    background-color: #014590;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+	margin-top: px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #014590;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+a:focus, a:hover {
+    color: white;
+    text-decoration: underline;
+}
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #4396dc}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #4396dc;
+	color: white;
+}

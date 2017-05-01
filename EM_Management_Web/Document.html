@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://localhost:81/index.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Document</title>
+	
+	<link rel="stylesheet" type="text/css" href="./Document_files/styleanhdong.css">
+	<link rel="stylesheet" type="text/css" href="./Document_files/mystyle.css">
+	<link rel="stylesheet" type="text/css" href="./Document_files/stylethanhvien.css">
+	
+	<link rel="stylesheet" href="./Document_files/bootstrap.min.css">
+  	<script src="./Document_files/jquery.min.js.download"></script>
+  	<script src="./Document_files/bootstrap.min.js.download"></script>
+	<style>
+		.tim{
+		margin-left: 400px;
+		margin-top: 10px;
+		}
+	
+	</style>
+	<style>
+	.dropbtn1 {
+    background-color: #014590;
+    color: white;
+    padding: 3px;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+	margin-top: 49px;
+	margin-right: -5px;
+}
+	</style>
+</head>
+<body>
+		<script>
+	function myFunction() {
+		document.getElementById("myDropdown").classList.toggle("show");
+	}
+	window.onclick = function(event) {
+	  if (!event.target.matches('.dropbtn')) {
+
+		var dropdowns = document.getElementsByClassName("dropdown-content");
+		var i;
+		for (i = 0; i < dropdowns.length; i++) {
+		  var openDropdown = dropdowns[i];
+		  if (openDropdown.classList.contains('show')) {
+			openDropdown.classList.remove('show');
+		  }
+		}
+	  }
+	}
+	</script>
+	<div class="main">
+		
+		<div class="head1">
+		<img src="./Document_files/Logo.png" width="199" height="110">		</div>
+		<div class="head2">
+		
+			<div class="tim">
+			<div class="container">			  
+			  <form method="get"><div class="input-group">
+			  <table>
+			  	<tbody><tr>
+			  		<td><input type="text" size="40" class="form-control" placeholder="Search"></td>
+			  		<td> <div class="input-group-btn">
+					<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+				  </div> </td>
+			  	</tr>
+			 	</tbody></table></div>
+			  </form>
+			</div>	
+			</div>
+			<div class="dangnhap">
+			<form method="post">
+			<button class="dropbtn1" name="dangnhap"> Đăng nhập </button> 
+							</form>
+			</div>
+				
+			
+	
+		</div>
+		<div class="abc">
+		<div class="congcu">
+			<div class="maunen">
+			<div class="dropdown"><form method="post">
+				<button class="dropbtn" name="trangchu">Trang chủ</button>
+					
+					</form>				
+			</div> 
+			<div class="dropdown">
+			  <button onclick="myFunction()" class="dropbtn">Chức năng</button>
+			  <div id="myDropdown" class="dropdown-content">
+				<a href="http://localhost:81/taoduan.php">Tạo dự án</a>
+				<a href="http://localhost:81/muonthietbi.php">Mượn thiết bị</a>
+			  </div>
+			</div>
+			
+				
+			</div>
+			</div>
+			<div class="chuchay">
+			
+					
+					<marquee width="100%">Fuck Hiệp!!!!! Fuck Chung!!!!!</marquee>
+			
+				
+			</div>
+			</div>		
+		<div class="body">
+		<div class="ABCD"><h4>Sản phẩm nổi bật</h4></div>
+			<div class="khoaanh">
+				<center><div class="container">
+					  <br>
+					  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+						  <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+						  <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+						  <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+						  <li data-target="#myCarousel" data-slide-to="3" class=""></li>
+						</ol>
+
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+
+						  <div class="item">
+						  <a href="http://localhost:81/intro1.php">
+							<img src="./Document_files/1.jpg" width="280" height="280"></a>
+							<div class="carousel-caption">
+							  <h3><table><tbody><tr>
+
+										<td>Kit RF thu phát Wifi BLE ESP32</td>
+
+									</tr></tbody></table></h3>
+							</div>
+						  </div>
+
+						  <div class="item active">
+						  <a href="http://localhost:81/intro2.php">
+							<img src="./Document_files/2.jpg" width="280" height="280"></a>
+							<div class="carousel-caption">
+							    <h3><table><tbody><tr>
+
+										<td>Cáp USB 2PS2</td>
+
+									</tr></tbody></table></h3>
+							  
+							</div>
+						  </div>
+
+						  <div class="item">
+						  	<a href="http://localhost:81/intro4.php"><img src="./Document_files/4.jpg" width="280" height="280"></a>
+							
+							<div class="carousel-caption">
+							   <h3><table><tbody><tr>
+
+										<td>Cáp usb máy tính 5m Unitek (YC421)</td>
+
+									</tr></tbody></table></h3>
+							 
+							</div>
+						  </div>
+
+						  <div class="item">
+						  <a href="http://localhost:81/intro3.php">
+							<img src="./Document_files/3.jpg" width="280" height="280"></a>
+							<div class="carousel-caption">
+							   <h3><table><tbody><tr>
+
+										<td>Bộ Chia 1 LCD  ra 2 CPU VGA DTECH</td>
+
+									</tr></tbody></table></h3>
+							</div>
+						  </div>
+
+						</div>
+
+						<!-- Left and right controls -->
+						<a class="left carousel-control" href="http://localhost:81/index.php#myCarousel" role="button" data-slide="prev">
+						  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						  <span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="http://localhost:81/index.php#myCarousel" role="button" data-slide="next">
+						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						  <span class="sr-only">Next</span>
+						</a>
+					  </div>
+					</div></center>
+				</div>
+			
+		
+		<div class="khoasanpham">
+		<div class="ABCD">Sản phẩm</div>
+		<center><table>
+				<tbody><tr>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+				</tr>
+				<tr>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+				</tr>
+				<tr>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+				</tr>
+				<tr>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+				</tr>
+				<tr>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+				</tr>
+				<tr>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+				</tr>
+				<tr>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+				</tr>
+				<tr>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+					<td><div class="body1"></div></td>
+				</tr>
+				<tr>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+					<td>     </td>
+					<td><div class="body2"><a href="http://localhost:81/intro1.php"><img src="./Document_files/intro1.jpg" width="240" height="115"></a><center><br>Kit RF thu phát Wifi BLE ESP32 NodeMCU LuaNode32<input type="button" name="xem" value="Xem chi tiết"></center></div></td>
+				</tr>
+				
+			</tbody></table></center>
+			</div>
+		<div class="main0">
+			<center><h5>Thành viên trong nhóm thiết kế</h5></center>
+		<table>
+				<tbody><tr>
+					<td><div class="container1">
+						  <img src="./Document_files/duy.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Designer</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/chuna.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Coder</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/phuc.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Collector</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/phi.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Analyst</div>
+						  </div>
+						</div>
+					</td>
+				
+			
+					<td><div class="container1">
+						  <img src="./Document_files/nhut.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Tester</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/phong.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Installer</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/hiep.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Team Leader</div>
+						  </div>
+						</div>
+					</td>
+					<td><div class="container1">
+						  <img src="./Document_files/oai.jpg" alt="Avatar" class="image">
+						  <div class="overlay">
+						  <div class="text">Coder</div>
+						  </div>
+						</div>
+					</td>
+					
+				</tr>
+			</tbody></table>
+	</div>
+
+		</div>
+		
+		<div class="ass">
+			
+			<center>
+			<br>
+			© Copyright - N8+<br>
+			<a href="https://www.facebook.com/groups/n8plus/">https://www.facebook.com/groups/n8plus/</a>
+			</center>
+			
+		</div>
+
+
+</div></body></html>

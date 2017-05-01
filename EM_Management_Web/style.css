@@ -1,0 +1,88 @@
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	background-image: url("anhnen.jpg");
+	
+}
+#main{
+	height:1000px;
+	width:900px;
+	background-color:White;
+	margin:30px auto 30px auto;
+}
+#main #hd{
+	height:100px;
+	width:900px;
+	background-color:red;
+}
+#main #body{
+	height:790px;
+	width:900px;
+	background-color:#EAEAEA;
+}
+#main #hd #ic{
+	height:95px;
+	width:180px;
+	background-color:#A9F5F2;
+	float:left;
+	padding:5px 0 0 40px;
+}
+#main #hd #item{
+	height:25px;
+	width:680px;
+	background-color:#A9F5F2;
+	float:right;
+	padding: 75px 0 0 0;
+}
+#main #conten1{
+	height:10px;
+	width:900px;
+	background-color:#211551;
+}
+#main #ft{
+	height:90px;
+	width:900px;
+	background-color:#5D0C7B;
+	
+}
+#main #ft p{
+	text-align:center;
+	color:white;
+	font-family:Arial, Tahoma;
+	font-size:14px;
+	font-weight:bold;
+}
+#main #conten2{
+	height:10px;
+	width:900px;
+	background-color:#211551;
+}
+#main #hd #item ul{
+	list-style:none;
+}
+#main #hd #item ul li{
+	display:inline;
+	padding:0 4px;
+}
+#main #hd #item ul li a{
+	
+	color:white;
+	padding:0 2px;
+	text-decoration:none;
+}
+#main #hd #item ul li a .ac, #main #hd #item ul li a:hover{
+	border-bottom:4px solid #00EE00;
+	color:blue;
+}
+.panel{
+	width: 150px;
+	height: 400px;
+	margin-left: px;
+	margin-top: px;
+	background-color:aqua;
+	
+}
+
+

@@ -1,0 +1,95 @@
+.hinhlon{
+	margin-left:1px;
+	width: 328px;
+	height: 329px;
+	
+	background-color: white;
+}
+.hinhnho{
+	width: 400px;
+	height: 588px;
+	background-color: white;
+	
+}
+.hinhnhonho{
+	width: 195px;
+	height: 200px;
+	background-color: white;
+	
+	
+}
+.hinhlon1{
+	width: 660px;
+	height: 329px;
+	background-color: white;
+}
+.hinhlon2{
+	
+	width: 952px;
+	height: 329px;
+	margin-left: 20px;
+	background-color: white;}
+
+#flip1 {
+	width: 50px;
+	float: inherit;
+    padding: 5px;
+    text-align: center;
+    background-color:  #3e8e41;
+    border: solid 1px white;
+	color: white;
+}
+
+#panel1 {
+	float: inherit;
+	text-align: left;
+    padding: 5px;
+    display: none;
+	background-color: white;
+	color: dark;
+	
+}
+input[type=number] {
+    background-color: white;
+    color: black;
+    padding: 8px 10px;
+    border: solid 1px black;
+  	font-size: 17px;
+    cursor: pointer;
+    width: 115px;
+	margin-left: 150px;
+}
+input[type=submit] {
+    background-color: #4396dc;
+    color: white;
+    padding: 7px 10px;
+    border: none;
+   
+    cursor: pointer;
+	width: 65px;
+}
+table {
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	
+	border: 2px;
+	border-color: aqua;
+	
+}
+.table1 {
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-left: 150px;
+	border: 2px;
+	border-color: aqua;
+	
+}
+
+*{
+	 padding: 0px;
+	margin: 0px;
+}
+
+
