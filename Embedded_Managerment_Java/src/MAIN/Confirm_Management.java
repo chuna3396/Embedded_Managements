@@ -5,9 +5,9 @@
  */
 package MAIN;
 
-import MAIN.Create_Account;
+import MAIN.Confirm_Create_Account;
 import MAIN.MAIN_GUI;
-import GUI.Custom.TableValue;
+import Table.TableValue;
 import java.awt.Insets;
 import javax.swing.UIManager;
 
@@ -24,7 +24,7 @@ public class Confirm_Management extends javax.swing.JPanel {
         UIManager.getDefaults().put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
         UIManager.getDefaults().put("TabbedPane.tabAreaInsets", new Insets(0, 0, 0, 0));
         UIManager.getDefaults().put("TabbedPane.tabsOverlapBorder", true);
-        tbp_Confirm.addTab("Đơn đăng ký thành viên", MAIN_GUI.ca);
+        tbp_Confirm.addTab("Đăng ký thành viên", MAIN_GUI.ca);
 //        MAIN_GUI.ca.setBounds(0, 0, 990, 600);
         tbp_Confirm.addTab("Đơn mượn thiết bị ", MAIN_GUI.cbdv);
 //        MAIN_GUI.cbdv.setBounds(0, 0, 990, 600);
@@ -44,6 +44,7 @@ public class Confirm_Management extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1030, 700));
 
+        tbp_Confirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tbp_Confirm.setPreferredSize(new java.awt.Dimension(1030, 700));
         tbp_Confirm.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

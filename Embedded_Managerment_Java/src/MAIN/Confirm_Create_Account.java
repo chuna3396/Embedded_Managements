@@ -3,20 +3,21 @@ package MAIN;
 import GUI.Custom.ComboCellInsetsDemo;
 import GUI.Custom.ResizeImage;
 import Table.TableValue;
-import static MAIN.Confirm_Create_Account.tbLst;
-import static MAIN.Confirm_Create_Account.tbRequest;
-import static MAIN.Confirm_Create_Account.tb_Register_A;
+import static MAIN.User_Management.tb_User_M;
 import MD5.CheckBoxHeader;
-import Models.Device;
-import SQL.*;
+import SQL.ConnectMySQL;
+import embedded_managerment.Change_Pass;
+import embedded_managerment.Confirm_Create_Acc;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Vector;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -27,72 +28,69 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-public class Borrow_Device extends javax.swing.JPanel implements TableModelListener, ActionListener {
+public class Confirm_Create_Account extends javax.swing.JPanel implements TableModelListener, ActionListener {
 
+    public static Confirm_Create_Acc create_Acc = new Confirm_Create_Acc();
     ConnectMySQL cn = new ConnectMySQL();
-    public static DefaultTableModel tbBorrow, tbLst;
     private ResizeImage ri = new ResizeImage();
+    private TableValue tv = new TableValue();
+    public static DefaultTableModel tbRequest, tbLst;
     private JPopupMenu menu = new JPopupMenu();
     private JMenuItem details = new JMenuItem("Chi tiết");
-    private JMenuItem edit = new JMenuItem("Sửa");
-    private JMenuItem delete = new JMenuItem("Xoá");
-    private TableValue tv = new TableValue();
+    private JMenuItem accept = new JMenuItem("Chấp nhận");
+    private JMenuItem notaccept = new JMenuItem("Hủy yêu cầu");
+    public static boolean isClose;
     
-    Object[] result;
 
-    public Borrow_Device() {
+    public Confirm_Create_Account() {
+        setPreferredSize(new Dimension(485, 726));
         initComponents();
         addMenu();
-        tbBorrow = cn.getBorrow();
-        tb_Borrow_D.setModel(tbBorrow);
-        tbLst = tv.listModel(tbBorrow, 1);
+        tbRequest = cn.getRequestUser();
+        tb_Register_A.setModel(tbRequest);
+        tbLst = tv.listModel(tbRequest, 2);
         tb_List.setModel(tbLst);
-        btn_Restore.setEnabled(false);
-        btn_Edit.setEnabled(false);
-        btn_Delete.setEnabled(false);
-        btn_Details.setIcon(ri.ResizeImage("/Image/details.png", null, 25, 25));
-        btn_Delete.setIcon(ri.ResizeImage("/Image/delete.png", null, 25, 25));
-        btn_Save.setIcon(ri.ResizeImage("/Image/save.png", null, 25, 25));
-        btn_Edit.setIcon(ri.ResizeImage("/Image/edit.png", null, 25, 25));
-        btn_Restore.setIcon(ri.ResizeImage("/Image/Restore.png", null, 25, 25));
-        btn_Reload.setIcon(ri.ResizeImage("/Image/Reload.png", null, 25, 25));
+        btn_Accept.setEnabled(false);
+        btn_NotAccept.setEnabled(false);
         lb_Ser.setIcon(ri.ResizeImage("/Image/search.png", null, 25, 25));
+        btn_Details.setIcon(ri.ResizeImage("/Image/details.png", null, 25, 25));
+        btn_Accept.setIcon(ri.ResizeImage("/Image/accept.png", null, 25, 25));
+        btn_NotAccept.setIcon(ri.ResizeImage("/Image/delete.png", null, 25, 25));
+        btn_Reload.setIcon(ri.ResizeImage("/Image/Reload.png", null, 25, 25));
+        btn_Reload.setIcon(ri.ResizeImage("/Image/Reload.png", null, 25, 25));
         setSizeColumn();
+        
+
+    }
+
+    private void setSizeColumn() {
+        TableColumn tc = tb_Register_A.getColumnModel().getColumn(0);
+        tc.setCellEditor(tb_Register_A.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(tb_Register_A.getDefaultRenderer(Boolean.class));
+        tc.setHeaderRenderer(new CheckBoxHeader(new MAIN.ItemListener(tb_Register_A), String.valueOf("Tất cả")));
+        JTableHeader header = (JTableHeader) tb_Register_A.getTableHeader();
+        header.setBackground(Color.WHITE);
     }
 
     private void addMenu() {
         menu.add(details);
-        menu.add(edit);
-        menu.add(delete);
-        edit.setEnabled(Boolean.FALSE);
-        delete.setEnabled(Boolean.FALSE);
+        menu.add(accept);
+        menu.add(notaccept);
+        accept.setEnabled(Boolean.FALSE);
+        notaccept.setEnabled(Boolean.FALSE);
         details.addActionListener(this);
-        edit.addActionListener(this);
-        delete.addActionListener(this);
-    }
-
-    private void setSizeColumn() {
-        TableColumn tc = tb_Borrow_D.getColumnModel().getColumn(0);
-        tc.setCellEditor(tb_Borrow_D.getDefaultEditor(Boolean.class));
-        tc.setCellRenderer(tb_Borrow_D.getDefaultRenderer(Boolean.class));
-        tc.setHeaderRenderer(new CheckBoxHeader(new MAIN.ItemListener(tb_Borrow_D), String.valueOf("Tất cả")));
-        JTableHeader header = (JTableHeader) tb_Borrow_D.getTableHeader();
-        header.setBackground(Color.WHITE);
-    }
-
-    @Override
-    public void tableChanged(TableModelEvent e) {
-
+        accept.addActionListener(this);
+        notaccept.addActionListener(this);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnl_Borrow = new javax.swing.JPanel();
+        pnl_User_R = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tb_Borrow_D = new javax.swing.JTable();
+        tb_Register_A = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,24 +100,22 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         lb_Ser = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btn_Details = new javax.swing.JButton();
-        btn_Save = new javax.swing.JButton();
-        btn_Edit = new javax.swing.JButton();
-        btn_Delete = new javax.swing.JButton();
-        btn_Restore = new javax.swing.JButton();
+        btn_Accept = new javax.swing.JButton();
+        btn_NotAccept = new javax.swing.JButton();
         btn_Reload = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1000, 700));
+        setPreferredSize(new java.awt.Dimension(1020, 622));
 
-        pnl_Borrow.setBackground(new java.awt.Color(255, 255, 255));
-        pnl_Borrow.setPreferredSize(new java.awt.Dimension(1000, 660));
+        pnl_User_R.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_User_R.setPreferredSize(new java.awt.Dimension(1000, 660));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jScrollPane2.setBorder(null);
 
-        tb_Borrow_D.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_Borrow_D.setModel(new javax.swing.table.DefaultTableModel(
+        tb_Register_A.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_Register_A.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -130,17 +126,17 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tb_Borrow_D.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        tb_Borrow_D.setFillsViewportHeight(true);
-        tb_Borrow_D.setRowHeight(50);
-        tb_Borrow_D.setShowHorizontalLines(false);
-        tb_Borrow_D.setShowVerticalLines(false);
-        tb_Borrow_D.addMouseListener(new java.awt.event.MouseAdapter() {
+        tb_Register_A.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tb_Register_A.setFillsViewportHeight(true);
+        tb_Register_A.setRowHeight(50);
+        tb_Register_A.setShowHorizontalLines(false);
+        tb_Register_A.setShowVerticalLines(false);
+        tb_Register_A.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_Borrow_DMouseClicked(evt);
+                tb_Register_AMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tb_Borrow_D);
+        jScrollPane2.setViewportView(tb_Register_A);
 
         jPanel2.add(jScrollPane2);
 
@@ -181,7 +177,7 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
 
         txf_Ser.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txf_Ser.setForeground(new java.awt.Color(153, 153, 153));
-        txf_Ser.setText("Tìm theo tên thiết bị");
+        txf_Ser.setText("Tìm theo tên người dùng");
         txf_Ser.setBorder(null);
         txf_Ser.setPreferredSize(new java.awt.Dimension(250, 35));
         txf_Ser.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -233,7 +229,7 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE))
         );
 
         jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -257,58 +253,30 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         });
         jToolBar1.add(btn_Details);
 
-        btn_Save.setText("Lưu");
-        btn_Save.setToolTipText("Thêm thiết bị mới");
-        btn_Save.setFocusable(false);
-        btn_Save.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_Save.setMaximumSize(new java.awt.Dimension(80, 45));
-        btn_Save.setMinimumSize(new java.awt.Dimension(80, 45));
-        btn_Save.setOpaque(false);
-        btn_Save.setPreferredSize(new java.awt.Dimension(27, 45));
-        btn_Save.addActionListener(new java.awt.event.ActionListener() {
+        btn_Accept.setText("Chấp nhận");
+        btn_Accept.setToolTipText("");
+        btn_Accept.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_Accept.setMaximumSize(new java.awt.Dimension(120, 45));
+        btn_Accept.setMinimumSize(new java.awt.Dimension(80, 45));
+        btn_Accept.setOpaque(false);
+        btn_Accept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SaveActionPerformed(evt);
+                btn_AcceptActionPerformed(evt);
             }
         });
-        jToolBar1.add(btn_Save);
+        jToolBar1.add(btn_Accept);
 
-        btn_Edit.setText("Sửa");
-        btn_Edit.setToolTipText("");
-        btn_Edit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_Edit.setMaximumSize(new java.awt.Dimension(80, 45));
-        btn_Edit.setMinimumSize(new java.awt.Dimension(80, 45));
-        btn_Edit.setOpaque(false);
-        btn_Edit.addActionListener(new java.awt.event.ActionListener() {
+        btn_NotAccept.setText("Hủy yêu cầu");
+        btn_NotAccept.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_NotAccept.setMaximumSize(new java.awt.Dimension(120, 45));
+        btn_NotAccept.setMinimumSize(new java.awt.Dimension(80, 45));
+        btn_NotAccept.setOpaque(false);
+        btn_NotAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_EditActionPerformed(evt);
+                btn_NotAcceptActionPerformed(evt);
             }
         });
-        jToolBar1.add(btn_Edit);
-
-        btn_Delete.setText("Xoá");
-        btn_Delete.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_Delete.setMaximumSize(new java.awt.Dimension(80, 45));
-        btn_Delete.setMinimumSize(new java.awt.Dimension(80, 45));
-        btn_Delete.setOpaque(false);
-        btn_Delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_DeleteActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btn_Delete);
-
-        btn_Restore.setText("Khôi phục");
-        btn_Restore.setFocusable(false);
-        btn_Restore.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_Restore.setMaximumSize(new java.awt.Dimension(80, 45));
-        btn_Restore.setMinimumSize(new java.awt.Dimension(80, 45));
-        btn_Restore.setOpaque(false);
-        btn_Restore.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_RestoreActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btn_Restore);
+        jToolBar1.add(btn_NotAccept);
 
         btn_Reload.setText("Tải lại");
         btn_Reload.setFocusable(false);
@@ -323,26 +291,26 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         });
         jToolBar1.add(btn_Reload);
 
-        javax.swing.GroupLayout pnl_BorrowLayout = new javax.swing.GroupLayout(pnl_Borrow);
-        pnl_Borrow.setLayout(pnl_BorrowLayout);
-        pnl_BorrowLayout.setHorizontalGroup(
-            pnl_BorrowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_BorrowLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_User_RLayout = new javax.swing.GroupLayout(pnl_User_R);
+        pnl_User_R.setLayout(pnl_User_RLayout);
+        pnl_User_RLayout.setHorizontalGroup(
+            pnl_User_RLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_User_RLayout.createSequentialGroup()
                 .addGap(2, 2, 2)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnl_BorrowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addGroup(pnl_User_RLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
-        pnl_BorrowLayout.setVerticalGroup(
-            pnl_BorrowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_BorrowLayout.createSequentialGroup()
+        pnl_User_RLayout.setVerticalGroup(
+            pnl_User_RLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_User_RLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(pnl_BorrowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_BorrowLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+                .addGroup(pnl_User_RLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_User_RLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                         .addGap(2, 2, 2))
-                    .addGroup(pnl_BorrowLayout.createSequentialGroup()
+                    .addGroup(pnl_User_RLayout.createSequentialGroup()
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -352,39 +320,37 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_Borrow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_User_R, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_Borrow, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(pnl_User_R, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tb_Borrow_DMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_Borrow_DMouseClicked
+    private void tb_Register_AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_Register_AMouseClicked
         if (SwingUtilities.isRightMouseButton(evt)) {
-            menu.show(tb_Borrow_D, evt.getX(), evt.getY());
+            menu.show(tb_Register_A, evt.getX(), evt.getY());
         }
-        if (tv.isSelectedRows(tb_Borrow_D, 0)) {
-            btn_Delete.setEnabled(true);
-            delete.setEnabled(true);
-            edit.setEnabled(true);
-            btn_Edit.setEnabled(true);
-            btn_Restore.setEnabled(true);
-        } else if (!tv.isSelectedRows(tb_Borrow_D, 0) || tb_Borrow_D.getRowCount() == 0) {
-            btn_Delete.setEnabled(false);
-            btn_Edit.setEnabled(false);
-            delete.setEnabled(false);
-            edit.setEnabled(false);
-            btn_Restore.setEnabled(false);
+        if (tv.isSelectedRows(tb_Register_A, 0)) {
+            btn_Accept.setEnabled(true);
+            accept.setEnabled(true);
+            btn_NotAccept.setEnabled(true);
+            notaccept.setEnabled(true);
+        } else if (!tv.isSelectedRows(tb_Register_A, 0) || tb_Register_A.getRowCount() == 0) {
+            btn_Accept.setEnabled(false);
+            btn_NotAccept.setEnabled(false);
+            accept.setEnabled(false);
+            notaccept.setEnabled(false);
         }
-    }//GEN-LAST:event_tb_Borrow_DMouseClicked
+    }//GEN-LAST:event_tb_Register_AMouseClicked
 
     private void tb_ListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_ListMouseClicked
         int r = tb_List.getSelectedRow();
         String query = tb_List.getValueAt(r, 0).toString().trim();
-        tv.filterTool(query, tb_Borrow_D);
+        tv.filterTool(query, tb_Register_A);
         if (query.equalsIgnoreCase("Tất cả")) {
-            tv.filterTool("", tb_Borrow_D);
+            tv.filterTool("", tb_Register_A);
         }
     }//GEN-LAST:event_tb_ListMouseClicked
 
@@ -394,7 +360,7 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
 
     private void txf_SerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_SerKeyPressed
         if (txf_Ser.getText().isEmpty()
-                || txf_Ser.getText().equalsIgnoreCase("Tìm theo ID mượn")) {
+                || txf_Ser.getText().equalsIgnoreCase("Tìm theo tên người dùng")) {
             txf_Ser.setForeground(Color.BLACK);
             txf_Ser.setText("");
         }
@@ -405,65 +371,55 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         tv.filterTool(query, tb_List);
     }//GEN-LAST:event_txf_SerKeyReleased
 
-    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-        DefaultTableModel tableModel = (DefaultTableModel) tb_Borrow_D.getModel();
-//        ArrayList<Contact> list = new ArrayList<Contact>();
-//        for (int i = 0; i < devices.size(); i++) {
-//            System.err.println("" + devices.get(i).getDv_ID());
-//        }
-    }//GEN-LAST:event_btn_SaveActionPerformed
-
     private void btn_DetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DetailsActionPerformed
         try {
-            int r = tb_Borrow_D.getSelectedRow();
-            Object[] d = TableValue.getValueAt(tb_Borrow_D, r);
-            new Details_Borrow_Request(pnl_Borrow, d, r);
+            int r = tb_Register_A.getSelectedRow();
+            Object[] d = TableValue.getUserAt(tb_Register_A, r);
+            new Details_User(pnl_User_R, d);
+            Details_User.lb_Activate.setText("Trạng thái yêu cầu");
+            Details_User.txt_Activated.setText("Đang chờ chấp nhận...");
         } catch (URISyntaxException ex) {
             Logger.getLogger(Device_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btn_DetailsActionPerformed
 
-    private void btn_EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditActionPerformed
+    private void btn_AcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AcceptActionPerformed
         try {
-            int r = tb_Borrow_D.getSelectedRow();
-            Object[] d = TableValue.getValueAt(tb_Borrow_D, r);
-            new Details_Borrow_Request(pnl_Borrow, d, r);
+            int r = tb_Register_A.getSelectedRow();
+            Object[] d = TableValue.getUserAt(tb_Register_A, r);
+            new Create_Account(pnl_User_R, d);
         } catch (URISyntaxException ex) {
             Logger.getLogger(Device_Management.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Confirm_Create_Account.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btn_EditActionPerformed
+    }//GEN-LAST:event_btn_AcceptActionPerformed
 
-    private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
-        int cfm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa đơm mượn này ?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
+    private void btn_NotAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NotAcceptActionPerformed
+        int cfm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn hủy yêu cầu này ?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
         if (cfm == JOptionPane.OK_OPTION) {
-            int r = tb_Borrow_D.getSelectedRow();
-            tbBorrow.removeRow(r);
-            tv.deleteRows(tb_Borrow_D, r);
-            btn_Restore.setEnabled(true);
+            int r = tb_Register_A.getSelectedRow();
+            int id = Integer.parseInt(tb_Register_A.getValueAt(1, r).toString());  
+            cn.notAcceptRegisterRequest(id);
+            JOptionPane.showMessageDialog(this, "Đã xóa thành công !");
+            btn_Reload.doClick();
         }
-    }//GEN-LAST:event_btn_DeleteActionPerformed
-
-    private void btn_RestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RestoreActionPerformed
-        tbBorrow = cn.getDevice();
-        tb_Borrow_D.setModel(tbBorrow);
-        setSizeColumn();
-        btn_Restore.setEnabled(false);
-    }//GEN-LAST:event_btn_RestoreActionPerformed
+    }//GEN-LAST:event_btn_NotAcceptActionPerformed
 
     private void btn_ReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ReloadActionPerformed
-        tbBorrow = cn.getBorrow();
-        tb_Borrow_D.setModel(tbBorrow);
-        tbLst = tv.listModel(tbBorrow, 1);
+        tbRequest = cn.getRequestUser();
+        tb_Register_A.setModel(tbRequest);
+        tbLst = tv.listModel(tbRequest, 2);
         tb_List.setModel(tbLst);
     }//GEN-LAST:event_btn_ReloadActionPerformed
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Delete;
+    private javax.swing.JButton btn_Accept;
     private javax.swing.JButton btn_Details;
-    private javax.swing.JButton btn_Edit;
+    private javax.swing.JButton btn_NotAccept;
     public static javax.swing.JButton btn_Reload;
-    private javax.swing.JButton btn_Restore;
-    private javax.swing.JButton btn_Save;
     public static javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -472,11 +428,16 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lb_Ser;
-    private javax.swing.JPanel pnl_Borrow;
-    public static javax.swing.JTable tb_Borrow_D;
+    private javax.swing.JPanel pnl_User_R;
     private javax.swing.JTable tb_List;
+    public static javax.swing.JTable tb_Register_A;
     private javax.swing.JTextField txf_Ser;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -484,12 +445,11 @@ public class Borrow_Device extends javax.swing.JPanel implements TableModelListe
         if (o == details) {
             btn_Details.doClick();
         }
-        if (o == edit) {
-            btn_Edit.doClick();
+        if (o == accept) {
+            btn_Accept.doClick();
         }
-        if (o == delete) {
-            btn_Delete.doClick();
+        if (o == notaccept) {
+            btn_NotAccept.doClick();
         }
     }
-
 }

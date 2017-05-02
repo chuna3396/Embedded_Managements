@@ -33,7 +33,7 @@ public class Details_User extends javax.swing.JFrame {
         txt_Name = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_Birthday = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        lb_Activate = new javax.swing.JLabel();
         txt_Activated = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txt_Sex = new javax.swing.JTextField();
@@ -48,7 +48,6 @@ public class Details_User extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(700, 420));
 
         pnl_Details_User.setBackground(new java.awt.Color(255, 255, 255));
         pnl_Details_User.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 2));
@@ -69,8 +68,8 @@ public class Details_User extends javax.swing.JFrame {
 
         txt_Birthday.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setText("Kích hoạt");
+        lb_Activate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lb_Activate.setText("Kích hoạt");
 
         txt_Activated.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
@@ -132,7 +131,7 @@ public class Details_User extends javax.swing.JFrame {
                             .addComponent(txt_Birthday, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(30, 30, 30)
                         .addGroup(pnl_Details_UserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                            .addComponent(lb_Activate, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                             .addComponent(txt_Activated)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                             .addComponent(txt_Sex)
@@ -169,7 +168,7 @@ public class Details_User extends javax.swing.JFrame {
                             .addComponent(txt_IDCard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnl_Details_UserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pnl_Details_UserLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
+                            .addComponent(lb_Activate)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txt_Activated, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(80, 80, 80))
@@ -221,12 +220,12 @@ public class Details_User extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    public static javax.swing.JLabel lb_Activate;
     private javax.swing.JPanel pnl_Details_User;
-    private javax.swing.JTextField txt_Activated;
+    public static javax.swing.JTextField txt_Activated;
     private javax.swing.JTextField txt_Birthday;
     private javax.swing.JTextField txt_Email;
     private javax.swing.JTextField txt_IDCard;

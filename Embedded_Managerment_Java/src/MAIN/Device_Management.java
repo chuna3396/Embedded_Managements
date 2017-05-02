@@ -1,8 +1,8 @@
 package MAIN;
 
 import GUI.Custom.ResizeImage;
-import GUI.Custom.TableValue;
-import Table.CheckBoxHeader;
+import Table.TableValue;
+import MD5.CheckBoxHeader;
 import Models.Device;
 import SQL.ConnectMySQL;
 import java.awt.Color;
@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
@@ -35,9 +36,11 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
     private JMenuItem edit = new JMenuItem("Sửa");
     private JMenuItem delete = new JMenuItem("Xoá");
     private TableValue tv = new TableValue();
-    public static ArrayList<Device> devices = new ArrayList<>();
+    public static ArrayList<Device> devicesPA = new ArrayList<>();
+    public static ArrayList<Integer> devicesPD = new ArrayList<>();
     private int row = 0;
-
+    private int button = -1;
+    
     public Device_Management() {
         initComponents();
         addMenu();
@@ -78,7 +81,7 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
         TableColumn tc = tb_Device_M.getColumnModel().getColumn(0);
         tc.setCellEditor(tb_Device_M.getDefaultEditor(Boolean.class));
         tc.setCellRenderer(tb_Device_M.getDefaultRenderer(Boolean.class));
-        tc.setHeaderRenderer(new CheckBoxHeader(new Table.ItemListener(tb_Device_M), String.valueOf("Tất cả")));
+        tc.setHeaderRenderer(new CheckBoxHeader(new MAIN.ItemListener(tb_Device_M), String.valueOf("Tất cả")));
         JTableHeader header = (JTableHeader) tb_Device_M.getTableHeader();
         header.setBackground(Color.WHITE);
     }
@@ -376,24 +379,25 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        row = tb_Device_M.getRowCount();
         new Device_M_Aed(pnl_Device);
+        button = 0;
     }//GEN-LAST:event_btn_AddActionPerformed
 
     private void btn_EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditActionPerformed
-        try {
-            int r = tb_Device_M.getSelectedRow();
-            System.out.println(r);
-            Object[] d = TableValue.getValueAt(tb_Device_M, r);
+       try {
+            Object[] d = TableValue.getValueAt(tb_Device_M, 0);
             new Device_M_Aed(pnl_Device, d, true);
         } catch (URISyntaxException ex) {
             Logger.getLogger(Device_Management.class.getName()).log(Level.SEVERE, null, ex);
         }
+        button = 1;
 
     }//GEN-LAST:event_btn_EditActionPerformed
 
     private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
         tv.deleteRows(tb_Device_M, 0);
+        delete.setEnabled(false);
+        button = 2;
         btn_Restore.setEnabled(true);
     }//GEN-LAST:event_btn_DeleteActionPerformed
 
@@ -453,7 +457,6 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
     }//GEN-LAST:event_tb_Device_MMouseClicked
 
     private void btn_RestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RestoreActionPerformed
-
         tbDevice = cn.getDevice();
         tb_Device_M.setModel(tbDevice);
         setSizeColumn();
@@ -463,13 +466,60 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
 
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
 
-        for (int i = 0; i < devices.size(); i++) {
-            System.err.println("" + devices.get(i).getDv_ID());
+       if (button == 2) {
+            System.err.println("Xoá");
+            int rowsPD = devicesPD.size();
+            if (rowsPD == 0) {
+                JOptionPane.showMessageDialog(pnl_Device, "Cập nhật thành công!");
+            } else if (rowsPD > 0) {
+                int d = JOptionPane.showConfirmDialog(pnl_Device, "Lưu lại",
+                        "Xác nhận", JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (d == JOptionPane.OK_OPTION) {
+                    for (int i = 0; i < devicesPD.size(); i++) {
+                        cn.deleteDeviceByID(devicesPD.get(i));
+                    }
+                    JOptionPane.showMessageDialog(pnl_Device, "Cập nhật thành công!");
+                } else {
+                }
+            }
+        } else {
+
+        }
+        if (button == 0) {
+            System.err.println("Thêm");
+            int rowsPA = devicesPA.size();
+            if (rowsPA == 0) {
+                JOptionPane.showMessageDialog(pnl_Device, "Cập nhật thành công!");
+            }
+            if (rowsPA > 0) {
+                int d = JOptionPane.showConfirmDialog(pnl_Device, "Lưu lại",
+                        "Xác nhận", JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (d == JOptionPane.OK_OPTION) {
+                    for (int i = 0; i < rowsPA; i++) {
+                        cn.addDevice(devicesPA.get(i).getDv_ID(), devicesPA.get(i).getDvName(),
+                                Integer.parseInt(devicesPA.get(i).getQuantity()), devicesPA.get(i).getState(),
+                                devicesPA.get(i).getCategory(), devicesPA.get(i).getManufacturer(),
+                                devicesPA.get(i).getDetails(), devicesPA.get(i).getSpecification());
+                    }
+                    JOptionPane.showMessageDialog(pnl_Device, "Cập nhật thành công!");
+                } else {
+                }
+
+            }
+        }
+        if (button == 1) {
+            System.err.println("Sửa");
+        }
+        if (button == -1) {
+
         }
     }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void btn_ReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ReloadActionPerformed
-        tbLst = tv.listModel((DefaultTableModel) tb_Device_M.getModel(), 2);
+        tbDevice = rs;
+        tb_Device_M.setModel(tbDevice);
+        tbLst = tv.listModel(tbDevice, 2);
+        tb_List.setModel(tbLst);
     }//GEN-LAST:event_btn_ReloadActionPerformed
 
 
@@ -529,17 +579,4 @@ public class Device_Management extends javax.swing.JPanel implements ActionListe
     }
 }
 
-//class MyItemListener implements ItemListener {
-//
-//    @Override
-//    public void itemStateChanged(ItemEvent e) {
-//        Object source = e.getSource();
-//        if (source instanceof AbstractButton == false) {
-//            return;
-//        }
-//        boolean checked = e.getStateChange() == ItemEvent.SELECTED;
-//        for (int x = 0, y = Device_Management.tb_Device_M.getRowCount(); x < y; x++) {
-//            Device_Management.tb_Device_M.setValueAt(checked, x, ((CheckBoxHeader) source).column);
-//        }
-//    }
-//}
+

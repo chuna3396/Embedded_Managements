@@ -5,10 +5,9 @@
  */
 package MAIN;
 
-import GUI.Custom.ResizeImage;
-import GUI.Custom.SetContainer;
-import GUI.Custom.TableValue;
-import static MAIN.Device_Management.devices;
+import GUI.Custom.ResizeImage; 
+import static MAIN.Device_Management.devicesPA;
+import Table.TableValue;
 import Models.Device;
 import java.awt.Image;
 import java.io.File;
@@ -25,7 +24,7 @@ import javax.swing.JComponent;
  */
 public class Device_M_Aed extends javax.swing.JFrame {
 
-    private String dvName;
+     private String dvName;
     private String manufacturer;
     private String quantity;
     private String category;
@@ -88,8 +87,8 @@ public class Device_M_Aed extends javax.swing.JFrame {
         //</editor-fold>
         initComponents();
         setLocationRelativeTo(component);
-        delete.setVisible(false);
-        edit.setVisible(false);
+        close.setVisible(false);
+//        edit.setVisible(false);
         setVisible(true);
     }
 
@@ -172,8 +171,7 @@ public class Device_M_Aed extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        delete = new javax.swing.JButton();
-        edit = new javax.swing.JButton();
+        close = new javax.swing.JButton();
         add = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -266,17 +264,10 @@ public class Device_M_Aed extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Thêm thiết bị mới");
 
-        delete.setText("Xoá");
-        delete.addActionListener(new java.awt.event.ActionListener() {
+        close.setText("Đóng");
+        close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-
-        edit.setText("Chỉnh sửa");
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
+                closeActionPerformed(evt);
             }
         });
 
@@ -293,10 +284,8 @@ public class Device_M_Aed extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(178, 178, 178)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -305,8 +294,7 @@ public class Device_M_Aed extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -431,17 +419,16 @@ public class Device_M_Aed extends javax.swing.JFrame {
     }//GEN-LAST:event_loadImageActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        if (edit.getActionCommand().equalsIgnoreCase("Chỉnh sửa")) {
-            if (add.getActionCommand().equalsIgnoreCase("Thêm")) {
+        if (add.getActionCommand().equalsIgnoreCase("Thêm")) {
                 getValueInput();
                 int id = TableValue.getMaxID(Device_Management.tb_Device_M, 1) + 1;
-                devices.add(new Device(id, dvName, manufacturer, quantity,
+                devicesPA.add(new Device(id, dvName, manufacturer, quantity,
                         category, state, details, specification, paths));
-                System.err.println("" + devices.get(devices.size() - 1).getDv_ID());
-                TableValue.addRow(Device_Management.tb_Device_M, TableValue.getObjects(devices.get(devices.size() - 1)));
+                System.err.println("" + devicesPA.get(devicesPA.size() - 1).getDv_ID());
+                TableValue.addRow(Device_Management.tb_Device_M, TableValue.getObjects(devicesPA.get(devicesPA.size() - 1)));
                 this.dispose();
             }
-        }
+//        }
         if (add.getActionCommand().equalsIgnoreCase("Huỷ")) {
             this.dispose();
         }
@@ -452,28 +439,15 @@ public class Device_M_Aed extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
          
-    }//GEN-LAST:event_deleteActionPerformed
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        if (edit.getActionCommand().equalsIgnoreCase("Chỉnh sửa")) {
-            setEdit(true);
-            add.setText("Huỷ");
-            edit.setText("Lưu lại");
-        } else {
-            setEdit(false);
-            add.setEnabled(true);
-            edit.setText("Chỉnh sửa");
-        }
-    }//GEN-LAST:event_editActionPerformed
+    }//GEN-LAST:event_closeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JComboBox<String> cbx_Category;
     private javax.swing.JComboBox<String> cbx_State;
-    private javax.swing.JButton delete;
-    private javax.swing.JButton edit;
+    private javax.swing.JButton close;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -2,11 +2,13 @@ package SQL;
 
 import Models.TaiKhoan;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +19,7 @@ public class ConnectMySQL {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
 
-    String hostName = "loachost";
+    String hostName = "172.16.199.170";
     String dbName = "database_embedded";
     String userName = "chuna";
     String password = "";
@@ -157,9 +159,9 @@ public class ConnectMySQL {
         return nickName;
     }
 
-    public void addDevice(int ID, String TenSP, int SL, String TTr, String LoaiSP, String NSX, String Mota) {
+   public void addDevice(int ID, String TenSP, int SL, String TTr, String LoaiSP, String NSX, String Mota, String specifi) {
         //System.setProperty("file.encoding","UTF-16");
-        String sql = "INSERT INTO device VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO device VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try {
             ps = cn.prepareStatement(sql);
             ps.setInt(1, ID);
@@ -169,12 +171,11 @@ public class ConnectMySQL {
             ps.setString(4, TTr);
             ps.setString(5, LoaiSP);
             ps.setString(7, Mota);
-            System.out.println(ID + "', '" + TenSP + "', '" + SL + "', '" + NSX + "', '" + LoaiSP);
+            ps.setString(8, specifi);
             int rows = ps.executeUpdate();
-
+            System.out.println(rows + "insert success");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
-            System.err.println(ex);
+            JOptionPane.showMessageDialog(null, "lỗi add device!");
         }
     }
 
@@ -192,23 +193,12 @@ public class ConnectMySQL {
             System.out.println(ID + "', '" + TenSP + "', '" + SL + "', '" + NSX + "', '" + LoaiSP);
             int rows = ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
+            JOptionPane.showMessageDialog(null, "lỗi update device!");
             System.err.println(ex);
         }
     }
 
-    public void deleteDevice(int ID) {
-        String sql = "DELETE FROM device WHERE Device_ID=?";
-        try {
-            ps = cn.prepareStatement(sql);
-            ps.setInt(1, ID);
-            int rows = ps.executeUpdate();
-            System.out.println("Delete * " + ID);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
-            System.err.println(ex);
-        }
-    }
+
 
     public String loadImage(int ID_Device) {
         String path = null;
@@ -221,7 +211,7 @@ public class ConnectMySQL {
                 path = "http://" + hostName + rs.getString(1);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
+            JOptionPane.showMessageDialog(null, "lỗi load image !");
         }
         //System.out.println(path);
         return path;
@@ -276,7 +266,7 @@ public class ConnectMySQL {
                 tblDevice.addRow(rows);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi dd!");
+            JOptionPane.showMessageDialog(null, "lỗi get device !");
         }
         return tblDevice;
     }
@@ -358,38 +348,54 @@ public class ConnectMySQL {
     
     public DefaultTableModel getBorrow() {
         DefaultTableModel tbl = new DefaultTableModel() {
-            @Override
+              @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                switch (column) {
+                    case 0:
+                        return true;
+                    default:
+                        return false;
+                }
             }
+
+            @Override
+            public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return Boolean.class;
+                    default:
+                        return String.class;
+                }
+            }  
         };
-        String[] colsName = {"ID Mượn", "Tên Thiết bị", "Người mượn",
-            "Dự án", "Ngày mượn", "Ngày trả (dự kiến)", "Tình trạng", "Hoàn trả"};
+        String[] colsName = {"Tất cả", "ID mượn", "Tên Thiết bị", "Người mượn",
+            "Dự án", "Ngày mượn", "Ngày trả (dự kiến)", "Số lượng", "Tình trạng", "Hoàn trả"};
         tbl.setColumnIdentifiers(colsName);
         String sql = "SELECT Borrow_ID, device.Device_Name,"
-                + " user_info.User_Name, project.Project_Name, device_borrow.Borrow_Date,"
-                + "device_borrow.Expect_Date ,device.State,device_borrow.IsPay "
-                + "FROM device_borrow, user_info,project,device "
+                + " user_info.User_Name, Project_Name, device_borrow.Borrow_Date,"
+                + "device_borrow.Expect_Date, device_borrow.Quantity, device.State, device_borrow.IsPay "
+                + "FROM device_borrow, user_info, device "
                 + "WHERE user_info.User_ID=device_borrow.User_ID "
-                + "AND device.Device_ID=device_borrow.Device_ID "
-                + "AND project.Project_ID=device_borrow.Project_ID";
+                + "AND device.Device_ID=device_borrow.Device_ID ";
         try {
             ps = cn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Object rows[] = new Object[8];
-                rows[0] = rs.getInt(1);
-                rows[1] = rs.getString(2);
-                rows[2] = rs.getString(3);
-                rows[3] = rs.getString(4);
-                rows[4] = rs.getDate(5);
-                rows[5] = rs.getDate(6);
-                rows[6] = rs.getString(7);
-                rows[7] = (rs.getBoolean(8) == false) ? "Chưa" : "Xong";
+                Object rows[] = new Object[10];
+                rows[0] = false;
+                rows[1] = rs.getInt(1);
+                rows[2] = chuanHoa(rs.getString(2));
+                rows[3] = rs.getString(3);
+                rows[4] = rs.getString(4);
+                rows[5] = rs.getDate(5);
+                rows[6] = rs.getDate(6);
+                rows[7] = rs.getInt(7);
+                rows[8] = rs.getString(8);
+                rows[9] = (rs.getBoolean(9) == false) ? "Chưa trả" : "Đã trả";
                 tbl.addRow(rows);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
+            JOptionPane.showMessageDialog(null, "lỗi get borrow !");
         }
         return tbl;
     }
@@ -428,7 +434,7 @@ public class ConnectMySQL {
                 tbl.addRow(rows);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
+            JOptionPane.showMessageDialog(null, "lỗi get pay !");
         }
         return tbl;
     }
@@ -440,45 +446,137 @@ public class ConnectMySQL {
 
     public DefaultTableModel getRequestUser() {
         DefaultTableModel tbl = new DefaultTableModel() {
-            @Override
+              @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                switch (column) {
+                    case 0:
+                        return true;
+                    default:
+                        return false;
+                }
             }
+
+            @Override
+            public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return Boolean.class;
+                    default:
+                        return String.class;
+                }
+            }  
         };
-        String[] colsName = {"ID", "Name", "Giới tính", "Ngày sinh", "CMND", "Phone", "Email", "Kích hoạt"};
+        String[] colsName = {"Tất cả", "ID", "Họ tên", "Ngày sinh", "Giới tính", "CMND", "Số ĐT", "Email", "Trạng thái yêu cầu"};
         getColumnName(colsName);
         tbl.setColumnIdentifiers(colsName);
         String sql;
-        sql = "SELECT * FROM register_request";
+        sql = "SELECT * FROM register_request WHERE Accept = 'false' ";
         try {
             ps = cn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Object rows[] = new Object[8];
-                rows[0] = rs.getString(1);
-                rows[1] = rs.getString(2);
-                rows[2] = rs.getString(4);
+                Object rows[] = new Object[9];
+                rows[0] = false;
+                rows[1] = rs.getInt(1);
+                rows[2] = rs.getString(2);
                 rows[3] = rs.getDate(3);
-                rows[4] = rs.getString(5);
-                rows[5] = rs.getString(6);
-                rows[6] = rs.getString(7);
-                rows[7] = (rs.getBoolean(8) == true) ? "Kích hoạt" : "Chưa kích hoạt";
+                rows[4] = rs.getString(4);
+                rows[5] = rs.getString(5);
+                rows[6] = rs.getString(6);
+                rows[7] = rs.getString(7);
+                rows[8] = (rs.getBoolean(8) == true) ? "Chấp nhận" : "Chưa chấp nhận";
                 tbl.addRow(rows);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi !");
+            JOptionPane.showMessageDialog(null, "lỗi load register_request!");
         }
         return tbl;
     }
+    
+    public void saveUserRequest(String usid, String pass){
+        String sql = "INSERT INTO user VALUES (?, ?)";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, usid);
+            ps.setString(2, pass);         
+            int rows = ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi thêm tk user!");
+            System.err.println(ex);
+        }
+    }
+    
+    public void saveUserInfoRequest(String usid, String name, Date bd, String sex, String idcard, String phone, String mail, boolean active){
+        String sql = "INSERT INTO `user_info`(`User_ID`, `User_Name`, `Birthday`, `Sex`, `IDCard`, `Phone`, `Email`, `Activated`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, usid);   
+            ps.setString(2, name);
+            ps.setDate(3, bd);
+            ps.setString(4, sex);
+            ps.setString(5, idcard);
+            ps.setString(6, phone);
+            ps.setString(7, mail);
+            ps.setBoolean(8, active);
+            int rows = ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi thêm thông tin user!");
+            System.err.println(ex);
+        }
+    }
+    
+    public void AcceptRegisterRequest(int ID){
+        String sql = "UPDATE `register_request` SET `Accept`='1' WHERE `Register_ID`=?";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi accept Register Request !");
+            System.err.println(ex);
+        }
+    }
+    
+    public void notAcceptRegisterRequest(int ID){
+        String sql = "DELETE FROM register_request WHERE Register_ID=?";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete * " + ID);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa yêu cầu !");
+            System.err.println(ex);
+        }
+    }
+    
+    
 
     public DefaultTableModel getBorrowRequest() {
         DefaultTableModel tbl = new DefaultTableModel() {
-            @Override
+              @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                switch (column) {
+                    case 0:
+                        return true;
+                    default:
+                        return false;
+                }
             }
+
+            @Override
+            public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return Boolean.class;
+                    default:
+                        return String.class;
+                }
+            }  
         };
-        String[] colsName = {"ID đơn mượn", "Tên Thiết bị", "Người mượn",
+        String[] colsName = {"Tất cả", "ID đơn mượn", "Tên Thiết bị", "Người mượn",
             "Dự án", "Ngày mượn", "Ngày trả (dự kiến)", "Tình trạng"};
         tbl.setColumnIdentifiers(colsName);
         String sql = "SELECT Confirm_ID, device.Device_Name, user_info.User_Name, "
@@ -491,18 +589,19 @@ public class ConnectMySQL {
             ps = cn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Object rows[] = new Object[7];
-                rows[0] = rs.getInt(1);
-                rows[1] = rs.getString(2);
-                rows[2] = rs.getString(3);
-                rows[3] = rs.getString(4);
-                rows[4] = rs.getDate(5);
-                rows[5] = rs.getDate(6);
-                rows[6] = rs.getString(7);
+                Object rows[] = new Object[8];
+                rows[0] = false;
+                rows[1] = rs.getInt(1);
+                rows[2] = rs.getString(2);
+                rows[3] = rs.getString(3);
+                rows[4] = rs.getString(4);
+                rows[5] = rs.getDate(5);
+                rows[6] = rs.getDate(6);
+                rows[7] = rs.getString(7);
                 tbl.addRow(rows);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "lỗi nhe !");
+            JOptionPane.showMessageDialog(null, "lỗi get borrow request !");
         }
         return tbl;
     }
@@ -523,4 +622,165 @@ public class ConnectMySQL {
         return count;
     }
  
+    public void deleteViolate(int ID) {
+        String sql = "DELETE FROM violate WHERE Payment_ID = "
+                + "(SELECT Payment_ID FROM device_pay WHERE Borrow_ID  = "
+                + "(SELECT Borrow_ID FROM device_Borrow WHERE Device_ID = "
+                + "(SELECT Device_ID FROM device WHERE Device_ID = ? )))";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+    public void deleteImage(int ID) {
+        String sql = "DELETE FROM device_image WHERE Device_ID = "
+                + "(SELECT Device_ID From device WHERE Device_ID = ? )";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows + "line");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+    public void deletePay(int ID) {
+        String sql = "DELETE FROM `device_pay` WHERE Borrow_ID  = "
+                + "(SELECT Borrow_ID  FROM device_Borrow WHERE Device_ID = "
+                + "(SELECT Device_ID FROM device WHERE Device_ID = ? ))";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows + "line");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+    public void deleteBorrow(int ID) {
+        String sql = "DELETE FROM `device_borrow` WHERE Device_ID = "
+                + "(SELECT Device_ID From device WHERE Device_ID = ? )";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows + "line");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+//    public void deleteCart(int ID) {
+//        String sql = "DELETE FROM `cart` WHERE Borrow_ID = "
+//                + "(SELECT Borrow_ID  FROM device_Borrow WHERE Device_ID = "
+//                + "(SELECT Device_ID FROM device WHERE Device_ID = ? ))";
+//        try {
+//            ps = cn.prepareStatement(sql);
+//            ps.setInt(1, ID);
+//            int rows = ps.executeUpdate();
+//            System.out.println("Delete " + rows + "line");
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+//            System.err.println(ex);
+//        }
+//    }
+
+    public void deleteRequest(int ID) {
+        String sql = "DELETE FROM `borrow_request` WHERE Device_ID = "
+                + "(SELECT Device_ID From device WHERE Device_ID = ? )";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows + "line");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+    public void deleteDevice(int ID) {
+        String sql = "DELETE FROM `device` WHERE Device_ID = ?";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            int rows = ps.executeUpdate();
+            System.out.println("Delete " + rows + "line");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa !");
+            System.err.println(ex);
+        }
+    }
+
+    public void deleteDeviceByID(int ID) {
+        deleteViolate(ID);
+        deletePay(ID);
+        deleteBorrow(ID);
+        deleteImage(ID);
+        deleteRequest(ID);
+        deleteDevice(ID);
+    }
+
+    public int getQuanByCategory(String type) {
+        String sql = "SELECT COUNT(*) FROM `device` WHERE Category = ?";
+        int count = 0;
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, type);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi nhe  !");
+        }
+        return count;
+    }
+    String sql = "Select count(*) from device_borrow Where Device_ID = ?";
+
+    public int getCount_Device_ID(int id) {
+        int count = 0;
+        String sql = "Select Quantity from device_borrow Where Device_ID = ?";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = (rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi nhe  !");
+        }
+        return count;
+    }
+
+    public ArrayList<Integer> getDevice_ID(String type) {
+        ArrayList<Integer> count = new ArrayList<>();
+        String sql = "Select Device_ID FROM device Where Category = ?";
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, type);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                count.add(rs.getInt(1));
+
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "lỗi nhe  !");
+        }
+        return count;
+    }
+
 }

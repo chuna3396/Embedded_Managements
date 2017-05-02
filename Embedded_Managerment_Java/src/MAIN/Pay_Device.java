@@ -1,6 +1,6 @@
 package MAIN;
 
-import GUI.Custom.TableValue;
+import Table.TableValue;
 import SQL.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,7 +11,7 @@ public class Pay_Device extends javax.swing.JPanel {
 
     public Pay_Device() {
         initComponents();
-        tbPay = cn.getPay();
+//        tbPay = cn.getPay();
     }
 
     @SuppressWarnings("unchecked")

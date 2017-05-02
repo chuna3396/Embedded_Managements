@@ -2,6 +2,7 @@ package MAIN;
 
 import GUI.Custom.ResizeImage;
 import SQL.ConnectMySQL;
+import MAIN.Statistic_BP;
 import java.awt.Dimension;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ public final class MAIN_GUI extends javax.swing.JFrame {
     public static Borrow_Device bdv = new Borrow_Device();
     public static Pay_Device pdv = new Pay_Device();
     public static Statistic_BP sts = new Statistic_BP();
-    public static Create_Account ca = new Create_Account();
+    public static Confirm_Create_Account ca = new Confirm_Create_Account();
     public static Confirm_Borrow_Dv cbdv = new Confirm_Borrow_Dv();
     public static Confirm_Management cm = new Confirm_Management();
     public static DefaultListModel list = new DefaultListModel();

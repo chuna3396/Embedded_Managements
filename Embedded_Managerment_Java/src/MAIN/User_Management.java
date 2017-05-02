@@ -2,9 +2,9 @@ package MAIN;
 
 import GUI.Custom.ComboCellInsetsDemo;
 import GUI.Custom.ResizeImage;
-import GUI.Custom.TableValue;
+import Table.TableValue;
 import static MAIN.Device_Management.tb_Device_M;
-import Table.CheckBoxHeader;
+import MD5.CheckBoxHeader;
 import SQL.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -70,7 +70,7 @@ public class User_Management extends javax.swing.JPanel  implements ActionListen
         TableColumn tc = tb_User_M.getColumnModel().getColumn(0);
         tc.setCellEditor(tb_User_M.getDefaultEditor(Boolean.class));
         tc.setCellRenderer(tb_User_M.getDefaultRenderer(Boolean.class));
-        tc.setHeaderRenderer(new CheckBoxHeader(new Table.ItemListener(tb_User_M), String.valueOf("Tất cả")));
+        tc.setHeaderRenderer(new CheckBoxHeader(new MAIN.ItemListener(tb_User_M), String.valueOf("Tất cả")));
         JTableHeader header = (JTableHeader) tb_User_M.getTableHeader();
         header.setBackground(Color.WHITE);
     }
@@ -373,7 +373,7 @@ public class User_Management extends javax.swing.JPanel  implements ActionListen
     private void tb_ListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_ListMouseClicked
         int r = tb_List.getSelectedRow();
         String query = tb_List.getValueAt(r, 0).toString().trim();
-         tv.filterTool(query, tb_User_M);
+        tv.filterTool(query, tb_User_M);
         if (query.equalsIgnoreCase("Tất cả")) {
             tv.filterTool("", tb_User_M);
         }
