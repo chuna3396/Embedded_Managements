@@ -18,6 +18,12 @@
 		margin-top: 10px;
 			
 		}
+		.but{
+			float: right;
+			width: 100px;
+			height: 100px;
+			margin-right: 43%;
+		}
 	
 	</style>
 	<style>
@@ -69,7 +75,7 @@
 	<div class="main">
 		
 		<div class="head1">
-		<?php echo '<img src=https://172.16.199.170/image/Logo.png width="199" height="110"/>';?>
+		<?php echo '<img src='.$local.'/image/Logo.png width="199" height="110"/>';?>
 		</div>
 		<div class="head2">
 		
@@ -89,7 +95,7 @@
 			<button onclick="document.getElementById('id01').style.display='block' "  style="width:100%;" >Login</button>
 			</div>
 			<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post" action="indexLG.php" >
+			  <form class="modal-content animate" method="post"   >
 				<div class="container12">
 				  <label><b>Tài khoản</b></label>
 				  <input type="text" placeholder="Enter Username" name="username" required>
@@ -119,7 +125,7 @@
 					}
 				}
 				if($kt>0){
-					header('location: indexLG.php');
+					header('location: intro11LG.php?User_ID='.$user.'');
 
 
 				}else{
@@ -154,7 +160,7 @@
 			</div>	
 				
 		<div class="body">
-			<div class="body">
+			
 		<div class="ABCD"><h4>&emsp;Chi tiết sản phẩm</h4></div>
 			<table>
 				<tr>
@@ -167,7 +173,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="280" height="280"/>';
 					} 
@@ -253,14 +259,15 @@
 						}
 						mysqli_close($conn);
 						?>
+						
 						</left>	</div>	
 						<br/>
 						<br/>
 						<br/>
 						<br/>
-						<form method="post">
-						 <input type="number" name="points" min="1" max="10" placeholder="Số Lượng">
-  							<input type="submit" name="submit" value="Mượn"></form>
+						
+						
+  						<div class="but"><button onclick="document.getElementById('id01').style.display='block' " style="width:100px; height=90px;" name="muon" >Mượn</button></div>
 					</div></td>
 				</tr>
 				<tr>
@@ -324,7 +331,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -339,7 +346,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -354,7 +361,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -369,7 +376,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -384,7 +391,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -392,7 +399,7 @@
 					?></a></div></td>
 				</tr>
 			</table>	</center>	
-		</div>
+		
 		
 		</div>
 		

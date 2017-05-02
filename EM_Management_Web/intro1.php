@@ -18,6 +18,12 @@
 		margin-top: 10px;
 			
 		}
+		.but{
+			float: right;
+			width: 100px;
+			height: 100px;
+			margin-right: 43%;
+		}
 	
 	</style>
 	<style>
@@ -69,9 +75,7 @@
 	<div class="main">
 		
 		<div class="head1">
-		<?php 
-			include('serverhinh.php');
-			echo '<img src=https://'.$server.'/image/Logo.png width="199" height="110"/>';?>
+		<?php echo '<img src='.$local.'/image/Logo.png width="199" height="110"/>';?>
 		</div>
 		<div class="head2">
 		
@@ -169,7 +173,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="280" height="280"/>';
 					} 
@@ -255,15 +259,15 @@
 						}
 						mysqli_close($conn);
 						?>
-						<table><tr><td><b>Ngày Trả: &emsp;</b></td><td><input type="date" name="bday" min="<?php echo ''.date("Y-m-d");?>"></td></tr></table>
+						
 						</left>	</div>	
 						<br/>
 						<br/>
 						<br/>
 						<br/>
 						
-						 <input type="number" name="points" min="1" max="10" placeholder="Số Lượng">
-  							<button onclick="document.getElementById('id01').style.display='block' " style="width:100px; height=90px;" name="muon" >Mượn</button>
+						
+  						<div class="but"><button onclick="document.getElementById('id01').style.display='block' " style="width:100px; height=90px;" name="muon" >Mượn</button></div>
 					</div></td>
 				</tr>
 				<tr>
@@ -327,7 +331,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -342,7 +346,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -357,7 +361,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -372,7 +376,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -387,7 +391,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 

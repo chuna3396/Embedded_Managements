@@ -295,15 +295,16 @@
 						mysqli_close($conn);
 							}
 						?>	
-						
+						<table><tr><td><b>Ngày trả: &emsp;</b></td><td><?php echo''.$_REQUEST['Expect_Date'];?></td></tr></table>
+						<table><tr><td><b>Số lượng: &emsp;</b></td><td><?php echo''.$_REQUEST['Quantity'];?></td></tr></table>
 						</left>	</div>	
 						<br/>
 						<br/>
 						<br/>
 						<br/>
+						<br/>
 						
-						 <input type="number" name="points" min="1" max="10" placeholder="Số Lượng">
-  							<button style="width:100px; height=90px;" name="muon" >Mượn</button>
+						
 					</div></td>
 				</tr>
 				<tr>

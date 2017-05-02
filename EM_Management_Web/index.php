@@ -17,7 +17,11 @@
 		margin-top: 10px;
 			
 		}
-	
+		.taotaikhoan{
+			float: left;
+			margin-left: 72%;
+			margin-top: 5px;
+		}
 	</style>
 	<style>
 	.dropbtn1 {
@@ -35,6 +39,7 @@
 <body>
 	<?php
 	include('connection.php');
+	
 	?>
 	<script>
 		// Get the modal
@@ -68,13 +73,13 @@
 	<div class="main">
 		
 		<div class="head1">
-		<?php echo '<img src=https://172.16.199.170/image/Logo.png width="199" height="110"/>';?>
+		<?php echo '<img src='.$local.'/image/Logo.png width="199" height="110"/>';?>
 		</div>
 		<div class="head2">
 		
 			<div class="tim">
 			<div class="container" >			  
-			  <form method="post"><div class="input-group">
+			  <form method="post"  action='search.php'><div class="input-group">
 			 <input type="text" size="45"  placeholder="Search">
 			  		
 				
@@ -82,13 +87,14 @@
 			  </form>
 			</div>	
 			</div>
-			
+			<div class="taotaikhoan"><button onclick="document.getElementById('id02').style.display='block' "  style="width:100%;" >Tạo tài khoản</button></div>
 			<div class="dangnhap">
+			
 			
 			<button onclick="document.getElementById('id01').style.display='block' "  style="width:100%;" >Đăng nhập</button>
 			</div>
 			<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post"  >
+			  <form class="modal-content animate" method="post"  action="check.php" >
 				<div class="container12">
 				  <label><b>Tài khoản</b></label>
 				  <input type="text" placeholder="Enter Username" name="username" required>
@@ -96,37 +102,37 @@
 				  <label><b>Mật khẩu</b></label>
 				  <input type="password" placeholder="Enter Password" name="password" required>
 
-				  <button type="submit" name="submit1">Login</button>
+				  <button type="submit" name="submit">Login</button>
 
 				<br/><br/>
 			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
 			<span class="psw">Forgot <a href="#">password?</a></span> </div>
 			  </form>
 			</div>
-			<?php
-				if(isset($_REQUEST['submit1'])){
-				include('connection.php');
-				$user=$_REQUEST['username'];
-				$pass=$_REQUEST['password'];
-				$SQL = "SELECT * FROM user";				
-				$result = mysqli_query($conn,$SQL);
-				$kt = 0;
-				$password= md5( $pass);
-				while ($row = mysqli_fetch_array($result)){
-					if (($row["User_ID"]===$user)&&($row["Password"]===$password)){
-						$kt = 1;
-					}
-				}
-				if($kt>0){
-					header('location: indexLG.php?User_ID='.$user.'');
-					
+				<div id="id02" class="modal">
+			  <form class="modal-content animate" method="post" action="taotaikhoan.php" >
+				<div class="container12">
+				  <label><b>Họ và tên: </b></label>
+				  <input type="text" placeholder="Nhập tên" name="ten" required>
+				<label><b>Ngày sinh: </b></label>
+				  <input type="date" placeholder="Nhập tên" name="date" required>
+				    <label><b>Giới tính: </b></label>
+				  <center><table><tr><td><input type="radio" name="gender" value="Nam"> Nam<br>
+  				 </td><td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td><td> <input type="radio" name="gender" value="Nữ"> Nữ<br></td></tr></table></center>
+				  <label><b>Chứng minh nhân dân:</b></label>
+				  <input type="number" placeholder="Chứng minh nhân dân" name="cmndd" required>
+				  <label><b>Số điện thoại:</b></label>
+				  <input type="number" placeholder="Số điện thoại" name="sdt" required>
+				 <label><b>Email:</b></label>
+				  <input type="text" placeholder="Email" name="email" required>
+				  <button type="submit" name="submit12">Xác Nhận</button>
 
-				}else{
-					echo "ERROR";
-				}
-				mysqli_close($conn);
-				}
-		?>
+				<br/><br/>
+			 <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
+			</div>
+			
 	
 		</div>
 		<div class="abc">
@@ -138,6 +144,7 @@
 					header('location:index.php');}?>	
 					</form>				
 			</div> 
+			
 			<div class="dropdown"  >
 				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý dự án</button>
 				
@@ -187,7 +194,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="280" height="280"/>';
 								} 
@@ -225,7 +232,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="280" height="280"/>';
 								} 
@@ -263,7 +270,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="280" height="280"/>';
 								} 
@@ -303,7 +310,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="280" height="280"/>';
 								} 
@@ -361,7 +368,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -393,7 +400,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -425,7 +432,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -463,7 +470,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -495,7 +502,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -527,7 +534,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -565,7 +572,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -591,13 +598,13 @@
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
 					<td><div class="body2"><a href="intro8.php"><?php
 							  include('connection.php');
-								$imgID = 1;
+								$imgID = 8;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
 								$result = $conn->query($sql);
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -623,13 +630,13 @@
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
 					<td><div class="body2"><a href="intro9.php"><?php
 							  include('connection.php');
-								$imgID = 1;
+								$imgID = 9;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
 								$result = $conn->query($sql);
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -667,7 +674,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -699,7 +706,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -731,7 +738,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -763,13 +770,13 @@
 			<tr>
 					<td><div class="body2"><a href="intro13.php"><?php
 							  include('connection.php');
-								$imgID = 1;
+								$imgID = 13;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
 								$result = $conn->query($sql);
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -801,7 +808,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
@@ -833,7 +840,7 @@
 								if ( $result->num_rows  < 1 ) {
 								} else {
 									$row = mysqli_fetch_assoc($result);
-									$imgData ="https://172.16.199.170".$row['Image_Url']."";
+									$imgData ="".$local."".$row['Image_Url']."";
 
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 

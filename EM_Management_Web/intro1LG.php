@@ -1,6 +1,7 @@
 	<!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
 	<title>Document</title>
 	
@@ -18,7 +19,12 @@
 		margin-top: 10px;
 			
 		}
-	
+		.but{
+			float: right;
+			width: 100px;
+			height: 100px;
+			margin-right: 43%;
+		}
 	</style>
 	<style>
 	.dropbtn1 {
@@ -36,6 +42,7 @@
 <body>
 	<?php
 	include('connection.php');
+	
 	?>
 	<script>
 		// Get the modal
@@ -69,7 +76,7 @@
 	<div class="main">
 		
 		<div class="head1">
-		<?php echo '<img src=https://172.16.199.170/image/Logo.png width="199" height="110"/>';?>
+		<?php echo '<img src='.$local.'/image/Logo.png width="199" height="110"/>';?>
 		</div>
 		<div class="head2">
 		
@@ -128,6 +135,7 @@
 		<div class="body">
 			
 		<div class="ABCD"><h4>&emsp;Chi tiết sản phẩm</h4></div>
+		
 			<table>
 				<tr>
 					<td><div class="hinhlon"><?php
@@ -139,7 +147,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="280" height="280"/>';
 					} 
@@ -224,34 +232,10 @@
 							echo "0 result";
 						}
 						mysqli_close($conn);
-						?><form method="post" action="<?php			
-								echo"dkmuonthietbi.php?User_ID=".$name.""; ?>">
-						<table><tr><td><b>Ngày Trả: &emsp;</b></td><td><input type="date" name="ngaytra" min="<?php echo ''.date("Y-m-d");?>"></td></tr></table>
-							<br/>
-						<table><tr><td><b>Tên dự án: &emsp;</b></td><td>
-							<?php
-								include('connection.php');
-								$sql = 'select * from project where User_ID="'.$name.'"';
-								$result = $conn->query($sql);
-								if($result->num_rows>0){
-									echo'<select name="duan">';
-									while ($row=mysqli_fetch_array($result)){
-										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
-									}echo"		</select>";
-								}
-								mysqli_close($conn);
-							?>
-						</td></tr></table>
-						</left>	</div>	
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
+						?>
+								
 						
-						 <input type="number" name="points" min="1" max="10" placeholder="Số Lượng">
-  							<button  style="width:100px; height=90px;" name="muon" >Mượn</button></form>
+  							<div class="but"><button onclick="document.getElementById('id01').style.display='block' "  name="muon" >Mượn</button></div>
 					</div></td>
 				</tr>
 				<tr>
@@ -259,6 +243,7 @@
 					
 					<?php					
 					include('connection.php');
+						
 					$sql="select * from device where Device_ID='".$imgID."'";
 					$result =$conn->query($sql);
 					if($result->num_rows>0){
@@ -300,6 +285,161 @@
 					</div>
 				</tr>
 			</table>
+			<div id="id01" class="modal">
+			  <form class="modal-content animate" method="post"   action="<?php echo"dkmuonthietbi.php?User_ID=".$name."&STT=".$imgID." "; ?>">
+				<div class="container12">
+				  <?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<h4><b>Xác nhận thông tin</b></h4><table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Họ và Tên:</b></td>
+									<td> &emsp;".$row['User_Name']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						 
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Ngày sinh:</b></td>
+									<td> &emsp;".$row['Birthday']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Giới tính:</b></td>
+									<td> &emsp;".$row['Sex']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Số chứng minh nhân dân:</b></td>
+									<td> &emsp;".$row['IDCard']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Số điện thoại:</b></td>
+									<td> &emsp;".$row['Phone']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Email:</b></td>
+									<td> &emsp;".$row['Email']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+				  		<table><tr><td><b>Ngày Trả: &emsp;</b></td><td><input type="date" name="ngaytra" min="<?php echo ''.date("Y-m-d");?>"></td></tr></table>
+							<br/>
+						<table><tr><td><b>Tên dự án: &emsp;</b></td><td>
+							<?php
+							
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+									}echo"		</select>";
+								}
+								mysqli_close($conn);
+							?>
+						</td></tr></table>
+						</left>	</div>	
+						<table><tr><td colspan="2"><input type="number" name="points" min="1" max="100" placeholder="Số Lượng"></td></tr></table>	<br/><br/>
+				  		<button type="submit" name="submit1" >Submit</button>
+
+				<br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
 			
 			<br/>
 			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><hr>
@@ -315,7 +455,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -330,7 +470,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -345,7 +485,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -360,7 +500,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -375,7 +515,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="190" height="190"/>';
 					} 
@@ -386,7 +526,7 @@
 		
 		
 		</div>
-		
+		</div>
 		<div class="ass">
 			
 			<center>

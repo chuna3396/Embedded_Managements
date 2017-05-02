@@ -1,6 +1,7 @@
 	<!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
 	<title>Document</title>
 	
@@ -24,7 +25,6 @@
 			height: 100px;
 			margin-right: 43%;
 		}
-	
 	</style>
 	<style>
 	.dropbtn1 {
@@ -42,6 +42,7 @@
 <body>
 	<?php
 	include('connection.php');
+	
 	?>
 	<script>
 		// Get the modal
@@ -88,52 +89,23 @@
 				  </div>
 			  </form>
 			</div>	
+			
 			</div>
 			
 			<div class="dangnhap">
 			
-			<button onclick="document.getElementById('id01').style.display='block' "  style="width:100%;" >Login</button>
+			<div class="dropdown"  ><form method="post"  >
+			<button  name="dangxuat" >Đăng xuất [<?php
+					if(isset($_REQUEST['User_ID']))
+				$name=$_REQUEST['User_ID'];
+				echo ''.$name;
+				?>]</button>
+				<?php if(isset($_REQUEST['dangxuat'])){
+					header('location:index.php');}?>	
+					</form>				
+			</div> 
 			</div>
-			<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post"   >
-				<div class="container12">
-				  <label><b>Tài khoản</b></label>
-				  <input type="text" placeholder="Enter Username" name="username" required>
-
-				  <label><b>Mật khẩu</b></label>
-				  <input type="password" placeholder="Enter Password" name="password" required>
-
-				  <button type="submit" name="submit">Login</button>
-
-				<br/><br/>
-			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			<span class="psw">Forgot <a href="#">password?</a></span> </div>
-			  </form>
-			</div>
-			<?php
-				if(isset($_REQUEST['submit'])){
-				include('connection.php');
-				$user=$_REQUEST['username'];
-				$pass=$_REQUEST['password'];
-				$SQL = "SELECT * FROM user";				
-				$result = mysqli_query($conn,$SQL);
-				$kt = 0;
-				$password= md5( $pass);
-				while ($row = mysqli_fetch_array($result)){
-					if (($row["User_ID"]===$user)&&($row["Password"]===$password)){
-						$kt = 1;
-					}
-				}
-				if($kt>0){
-					header('location: intro12LG.php?User_ID='.$user.'');
-
-
-				}else{
-					echo "ERROR";
-				}
-				mysqli_close($conn);
-				}
-		?>
+			
 	
 		</div>
 		<div class="abc">
@@ -142,16 +114,16 @@
 			<div class="dropdown"  ><form method="post" >
 				<button class="dropbtn" name="trangchu" >Trang chủ</button>
 				<?php if(isset($_REQUEST['trangchu'])){
-					header('location:index.php');}?>	
+					header('location:indexLG.php');}?>	
 					</form>				
 			</div> 
-			<div class="dropdown"  >
-				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý dự án</button>
-				
-					
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="quanlyduan" >Quản lý dự án</button>
+				<?php if(isset($_REQUEST['quanlyduan'])){
+					header('location:taoduan.php');}?>	
+					</form>				
+			</div> 
 			
-				
-			</div>
 			</div>
 			<div class="ABCDE">
 			<div class="chuchay">
@@ -159,15 +131,17 @@
 			</div>	</div>
 			</div>	
 				
+					
 		<div class="body">
 			
 		<div class="ABCD"><h4>&emsp;Chi tiết sản phẩm</h4></div>
+		
 			<table>
 				<tr>
 					<td><div class="hinhlon"><?php
 									
 					include('connection.php');		
-					$imgID = 12;
+					$imgID = 5;
 					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
 					$result = $conn->query($sql);
 					if ( $result->num_rows  < 1 ) {
@@ -259,15 +233,9 @@
 						}
 						mysqli_close($conn);
 						?>
+								
 						
-						</left>	</div>	
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						
-						
-  						<div class="but"><button onclick="document.getElementById('id01').style.display='block' " style="width:100px; height=90px;" name="muon" >Mượn</button></div>
+  							<div class="but"><button onclick="document.getElementById('id01').style.display='block' "  name="muon" >Mượn</button></div>
 					</div></td>
 				</tr>
 				<tr>
@@ -275,6 +243,7 @@
 					
 					<?php					
 					include('connection.php');
+						
 					$sql="select * from device where Device_ID='".$imgID."'";
 					$result =$conn->query($sql);
 					if($result->num_rows>0){
@@ -316,6 +285,161 @@
 					</div>
 				</tr>
 			</table>
+			<div id="id01" class="modal">
+			  <form class="modal-content animate" method="post"   action="<?php echo"dkmuonthietbi.php?User_ID=".$name."&STT=".$imgID." "; ?>">
+				<div class="container12">
+				  <?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<h4><b>Xác nhận thông tin</b></h4><table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Họ và Tên:</b></td>
+									<td> &emsp;".$row['User_Name']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						 
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Ngày sinh:</b></td>
+									<td> &emsp;".$row['Birthday']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Giới tính:</b></td>
+									<td> &emsp;".$row['Sex']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Số chứng minh nhân dân:</b></td>
+									<td> &emsp;".$row['IDCard']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Số điện thoại:</b></td>
+									<td> &emsp;".$row['Phone']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						<?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td><b>Email:</b></td>
+									<td> &emsp;".$row['Email']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+				  		<table><tr><td><b>Ngày Trả: &emsp;</b></td><td><input type="date" name="ngaytra" min="<?php echo ''.date("Y-m-d");?>"></td></tr></table>
+							<br/>
+						<table><tr><td><b>Tên dự án: &emsp;</b></td><td>
+							<?php
+							
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+									}echo"		</select>";
+								}
+								mysqli_close($conn);
+							?>
+						</td></tr></table>
+						</left>	</div>	
+						<table><tr><td colspan="2"><input type="number" name="points" min="1" max="100" placeholder="Số Lượng"></td></tr></table>	<br/><br/>
+				  		<button type="submit" name="submit1" >Submit</button>
+
+				<br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
 			
 			<br/>
 			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><hr>
@@ -402,7 +526,7 @@
 		
 		
 		</div>
-		
+		</div>
 		<div class="ass">
 			
 			<center>

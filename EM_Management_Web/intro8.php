@@ -18,6 +18,12 @@
 		margin-top: 10px;
 			
 		}
+		.but{
+			float: right;
+			width: 100px;
+			height: 100px;
+			margin-right: 43%;
+		}
 	
 	</style>
 	<style>
@@ -69,7 +75,7 @@
 	<div class="main">
 		
 		<div class="head1">
-		<?php echo '<img src=https://172.16.199.170/image/Logo.png width="199" height="110"/>';?>
+		<?php echo '<img src='.$local.'/image/Logo.png width="199" height="110"/>';?>
 		</div>
 		<div class="head2">
 		
@@ -89,7 +95,7 @@
 			<button onclick="document.getElementById('id01').style.display='block' "  style="width:100%;" >Login</button>
 			</div>
 			<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post" action="indexLG.php" >
+			  <form class="modal-content animate" method="post"   >
 				<div class="container12">
 				  <label><b>Tài khoản</b></label>
 				  <input type="text" placeholder="Enter Username" name="username" required>
@@ -119,7 +125,7 @@
 					}
 				}
 				if($kt>0){
-					header('location: indexLG.php');
+					header('location: intro8LG.php?User_ID='.$user.'');
 
 
 				}else{
@@ -154,7 +160,7 @@
 			</div>	
 				
 		<div class="body">
-			<div class="body">
+			
 		<div class="ABCD"><h4>&emsp;Chi tiết sản phẩm</h4></div>
 			<table>
 				<tr>
@@ -167,7 +173,7 @@
 					if ( $result->num_rows  < 1 ) {
 					} else {
 						$row = mysqli_fetch_assoc($result);
-						$imgData ="https://172.16.199.170".$row['Image_Url']."";
+						$imgData ="".$local."".$row['Image_Url']."";
 						
 						echo '<img src='.$imgData.' width="280" height="280"/>';
 					} 
@@ -245,6 +251,174 @@
 							while ($row=mysqli_fetch_array($result)){
 								echo"<tr>		
 									<td><b>Loại thiết bị:</b></td>
+									<td> &emsp;".$row['Category']."</td>		
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+						?>
+						
+						</left>	</div>	
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						
+						
+  						<div class="but"><button onclick="document.getElementById('id01').style.display='block' " style="width:100px; height=90px;" name="muon" >Mượn</button></div>
+					</div></td>
+				</tr>
+				<tr>
+					<td colspan="3"><div class="hinhlon2">
+					
+					<?php					
+					include('connection.php');
+					$sql="select * from device where Device_ID='".$imgID."'";
+					$result =$conn->query($sql);
+					if($result->num_rows>0){
+						echo"<hr><table>
+						<tr>						
+							<td><h2>Mô tả tổng quan</h2></td>
+						</tr>";
+						while ($row=mysqli_fetch_array($result)){
+							echo"<tr>							
+								<td>".$row['Details_Decribe']."</td>		
+							</tr>";
+						}echo"</table>";
+					}else{
+						echo "0 result";
+					}
+					mysqli_close($conn);
+			
+					?>	
+					<?php					
+					include('connection.php');
+					$sql="select * from device where Device_ID='".$imgID."'";
+					$result =$conn->query($sql);
+					if($result->num_rows>0){
+						echo"<hr><table>
+						<tr>						
+							<td><h2>Thông số kĩ thuật</h2></td>
+						</tr>";
+						while ($row=mysqli_fetch_array($result)){
+							echo"<tr>							
+								<td>".$row['Specification']."</td>		
+							</tr>";
+						}echo"</table>";
+					}else{
+						echo "0 result";
+					}
+					mysqli_close($conn);
+			
+					?>							
+					</div>
+				</tr>
+			</table>
+			
+			<br/>
+			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><hr>
+			<h2>&emsp;Thiết bị phổ biến</h2>
+			<center><table>
+				<tr>
+					<td><div class="hinhnhonho"><a href="intro1.php"><?php
+									
+					include('connection.php');		
+					$imgID = 1;
+					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
+					$result = $conn->query($sql);
+					if ( $result->num_rows  < 1 ) {
+					} else {
+						$row = mysqli_fetch_assoc($result);
+						$imgData ="".$local."".$row['Image_Url']."";
+						
+						echo '<img src='.$imgData.' width="190" height="190"/>';
+					} 
+					mysqli_close($conn);
+					?></a></div></td>
+					<td><div class="hinhnhonho"><a href="intro2.php"><?php
+									
+					include('connection.php');		
+					$imgID = 2;
+					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
+					$result = $conn->query($sql);
+					if ( $result->num_rows  < 1 ) {
+					} else {
+						$row = mysqli_fetch_assoc($result);
+						$imgData ="".$local."".$row['Image_Url']."";
+						
+						echo '<img src='.$imgData.' width="190" height="190"/>';
+					} 
+					mysqli_close($conn);
+					?></a></div></td>
+					<td><div class="hinhnhonho"><a href="intro4.php"><?php
+									
+					include('connection.php');		
+					$imgID = 4;
+					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
+					$result = $conn->query($sql);
+					if ( $result->num_rows  < 1 ) {
+					} else {
+						$row = mysqli_fetch_assoc($result);
+						$imgData ="".$local."".$row['Image_Url']."";
+						
+						echo '<img src='.$imgData.' width="190" height="190"/>';
+					} 
+					mysqli_close($conn);
+					?></a></div></td>
+					<td><div class="hinhnhonho"><a href="intro10.php"><?php
+									
+					include('connection.php');		
+					$imgID = 10;
+					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
+					$result = $conn->query($sql);
+					if ( $result->num_rows  < 1 ) {
+					} else {
+						$row = mysqli_fetch_assoc($result);
+						$imgData ="".$local."".$row['Image_Url']."";
+						
+						echo '<img src='.$imgData.' width="190" height="190"/>';
+					} 
+					mysqli_close($conn);
+					?></a></div></td>
+					<td><div class="hinhnhonho"><a href="intro11.php"><?php
+									
+					include('connection.php');		
+					$imgID = 11;
+					$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
+					$result = $conn->query($sql);
+					if ( $result->num_rows  < 1 ) {
+					} else {
+						$row = mysqli_fetch_assoc($result);
+						$imgData ="".$local."".$row['Image_Url']."";
+						
+						echo '<img src='.$imgData.' width="190" height="190"/>';
+					} 
+					mysqli_close($conn);
+					?></a></div></td>
+				</tr>
+			</table>	</center>	
+		
+		
+		</div>
+		
+		<div class="ass">
+			
+			<center>
+			<br/>
+			© Copyright - N8+<br/>
+			<a href="https://www.facebook.com/groups/n8plus/">https://www.facebook.com/groups/n8plus/</a>
+			</center>
+			
+		</div>
+
+</body>
+</html>
+			
+		
+	
+		<td><b>Loại thiết bị:</b></td>
 									<td> &emsp;".$row['Category']."</td>		
 								</tr>";
 							}echo"</table>";

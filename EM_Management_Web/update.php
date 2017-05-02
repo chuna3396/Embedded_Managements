@@ -101,22 +101,7 @@
 			
 	
 		</div>
-		<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post" action="<?php echo"luuduan.php?User_ID=".$name." "; ?>"  >
-				<div class="container12">
-				  <label><b>Tên dự án</b></label>
-				  <input type="text" placeholder="Tên dự án..." name="tenduan" required>
-				  
-				  <label><b>Người quản lý</b></label>
-				  <input type="text" placeholder="Người quản lý..." name="nguoiquanly" required>
-
-				  <button type="submit" name="submit1">Submit</button>
-
-				<br/><br/>
-			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			 </div>
-			  </form>
-			</div>
+		
 		<div class="abc">
 		<div class="congcu">
 			<div class="maunen">
@@ -127,25 +112,12 @@
 					</form>				
 			</div> 
 			
-			<div class="dropdown"  >
-				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Tạo dự án</button>
-
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="update" >Cập nhật dự án</button>
-				<?php if(isset($_REQUEST['update'])){
-					header('location: updateProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="delete" >Xóa dự án</button>
-				<?php if(isset($_REQUEST['delete'])){
-					header('location: deleteProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
+			
+			
 			
 			
 			</div>
+		
 			<div class="ABCDE">
 			<div class="chuchay">
 					<td><marquee width="100%">N8Plus sẽ nghỉ Lễ vào 3 ngày 30/4, 1/5 và 2/5, kính chúc Quý Khách 1 kỳ nghỉ Lễ vui vẻ !!! >>>>></marquee></td>	
@@ -154,13 +126,14 @@
 				
 		<div class="body">	
 		<div class="ABCD"><h4></h4></div>
-		
-		<center><h2>Thông tin dự án</h2></center>
-		<br/><br/>
-		<center>
+			<center><h2></h2></center>
+			<center>
+			<form method="post" name="form1" >
 			<?php
+				if(isset($_REQUEST['Project_Name'])){
+				$IDproject = $_REQUEST['Project_Name'];
 				include('connection.php');
-				$sql = 'select * from project where User_ID="'.$name.'"';
+				$sql = 'select * from project where Project_Name="'.$IDproject.'"';
 				$result = $conn->query($sql);
 				if($result->num_rows>0){
 					echo"<table>
@@ -169,21 +142,47 @@
 						<td>Tên dự án</td>
 						<td>Tài khoản người đăng ký</td>
 						<td>Người quản lý</td>
+						<td>Hành động</td>
 						
 					</tr>";
 					while ($row=mysqli_fetch_array($result)){
 						echo"<tr>
 							
-							<td>".$row['Project_Name']."</td>
-							<td>".$row['User_ID']."</td>
-							<td>".$row['Representative']."</td>
 							
+							<td><input type='text'  name='name' value='$row[Project_Name]'></td>
+							<td>".$row['User_ID']."</td>
+						
+							<td><input type='text'  name='nguoiquanly' value='$row[Representative]'></td>
+							<td><input type='submit' name='submit1' value='Thay đổi'></td>
 							
 							</tr>";
 					}echo"		</table>";
 				}
-				mysqli_close($conn);
-				?>
+				
+				}
+					
+					if(isset($_REQUEST['submit1'])){
+						$pro = $_REQUEST['name'];
+						$nguoiquanly = $_REQUEST['nguoiquanly'];
+						
+						
+						
+						
+						$sql2 = "UPDATE project SET Project_Name=".$pro.",Representative=".$nguoiquanly." WHERE Project_Name='$row[Project_Name]'";
+						$result2 = $conn->query($sql2);
+						
+						
+						
+						if($result2===true){
+							
+							echo  ' D';
+							
+						}else{
+							echo"tb";
+						}
+						mysqli_close($conn);
+					}
+					?></form>
 
 		</center>
 		
@@ -202,9 +201,6 @@
 				}
 				tr:nth-child(even){background-color: #f2f2f2}
 			</style>
-		
-			</div>
-		
 		</div>
 		<div class="ass">
 			

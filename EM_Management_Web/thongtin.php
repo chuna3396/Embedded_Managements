@@ -29,8 +29,7 @@
     cursor: pointer;
 	margin-top: 49px;
 	margin-right: -5px;
-}	
-	
+}
 	</style>
 </head>
 <body>
@@ -101,50 +100,50 @@
 			
 	
 		</div>
-		<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post" action="<?php echo"luuduan.php?User_ID=".$name." "; ?>"  >
-				<div class="container12">
-				  <label><b>Tên dự án</b></label>
-				  <input type="text" placeholder="Tên dự án..." name="tenduan" required>
-				  
-				  <label><b>Người quản lý</b></label>
-				  <input type="text" placeholder="Người quản lý..." name="nguoiquanly" required>
-
-				  <button type="submit" name="submit1">Submit</button>
-
-				<br/><br/>
-			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			 </div>
-			  </form>
-			</div>
 		<div class="abc">
 		<div class="congcu">
 			<div class="maunen">
 			<div class="dropdown"  ><form method="post" >
 				<button class="dropbtn" name="trangchu" >Trang chủ</button>
 				<?php if(isset($_REQUEST['trangchu'])){
-					header('location: indexLG.php?User_ID='.$name.'');}?>	
+					header('location:indexLG.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
-			
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="quanlyduan" >Quản lý dự án</button>
+				<?php if(isset($_REQUEST['quanlyduan'])){
+					header('location: xemduan.php?User_ID='.$name.'');}?>	
+					</form>				
+			</div> 
 			<div class="dropdown"  >
-				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Tạo dự án</button>
+				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý thiết bị mượn</button>
+	
+			</div> 
+			
+			<div id="id01" class="modal">
+			  <form class="modal-content animate" method="post" action="<?php echo"xemmuonthietbi.php?User_ID=".$name.""; ?>" >
+				<div class="container12">
+						<h2><center>Chọn dự án</center></h2>
+						<center>	<?php
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<form method="post" > <select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+									}echo"		</select></form>";
+								}
+								mysqli_close($conn);
+							?></center>
+				
 
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="update" >Cập nhật dự án</button>
-				<?php if(isset($_REQUEST['update'])){
-					header('location: updateProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="delete" >Xóa dự án</button>
-				<?php if(isset($_REQUEST['delete'])){
-					header('location: deleteProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			
-			
+				<br/><br/>
+				<button type="submit" name="submit1">Select</button><br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
+			</div>
 			</div>
 			<div class="ABCDE">
 			<div class="chuchay">
@@ -152,46 +151,59 @@
 			</div>	</div>
 			</div>	
 				
-		<div class="body">	
+		<div class="body">
+		
 		<div class="ABCD"><h4></h4></div>
-		
-		<center><h2>Thông tin dự án</h2></center>
-		<br/><br/>
-		<center>
-			<?php
-				include('connection.php');
-				$sql = 'select * from project where User_ID="'.$name.'"';
-				$result = $conn->query($sql);
-				if($result->num_rows>0){
-					echo"<table>
-					<tr>
+		<br/><br/><br/><br/><br/>
+			<center><?php
+						if(isset($_REQUEST['User_ID'])){
+						$user = $_REQUEST['User_ID'];
+						include('connection.php');
+						$sql="select * from user_info where User_ID ='".$user."'";
+						$result =$conn->query($sql);
+						if($result->num_rows>0){
+							echo"<table><tr>
+								<td><b>Tên người dùng</b></td>
+								<td><b>Ngày sinh</b></td>
+								<td><b>Giới tính</b></td>
+								<td><b>CMND</b></td>
+								<td><b>Số điện thoại</b></td>
+								<td><b>Email</b></td>
+							
+							</tr>
+							";
+							while ($row=mysqli_fetch_array($result)){
+								echo"<tr>		
+									<td> &emsp;".$row['User_Name']."</td>
+									<td> &emsp;".$row['Birthday']."</td>
+									<td> &emsp;".$row['Sex']."</td>
+									<td> &emsp;".$row['IDCard']."</td>
+									<td> &emsp;".$row['Phone']."</td>
+									<td> &emsp;".$row['Email']."</td>
+									
+								</tr>";
+							}echo"</table>";
+						}else{
+							echo "0 result";
+						}
+						mysqli_close($conn);
+							}
+						?>	
+						 
 						
-						<td>Tên dự án</td>
-						<td>Tài khoản người đăng ký</td>
-						<td>Người quản lý</td>
+				  		
+							<br/>
 						
-					</tr>";
-					while ($row=mysqli_fetch_array($result)){
-						echo"<tr>
-							
-							<td>".$row['Project_Name']."</td>
-							<td>".$row['User_ID']."</td>
-							<td>".$row['Representative']."</td>
-							
-							
-							</tr>";
-					}echo"		</table>";
-				}
-				mysqli_close($conn);
-				?>
-
-		</center>
+						</center>
 		
+		
+		
+		</div>
 		<style>table {
 					
 					border-collapse: collapse;
 					border-spacing: 0;
-					width: 70%;
+					width: 90%;
 					border: 2px solid #ddd;
 				}
 
@@ -202,10 +214,6 @@
 				}
 				tr:nth-child(even){background-color: #f2f2f2}
 			</style>
-		
-			</div>
-		
-		</div>
 		<div class="ass">
 			
 			<center>

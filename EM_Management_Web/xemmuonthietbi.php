@@ -101,22 +101,7 @@
 			
 	
 		</div>
-		<div id="id01" class="modal">
-			  <form class="modal-content animate" method="post" action="<?php echo"luuduan.php?User_ID=".$name." "; ?>"  >
-				<div class="container12">
-				  <label><b>Tên dự án</b></label>
-				  <input type="text" placeholder="Tên dự án..." name="tenduan" required>
-				  
-				  <label><b>Người quản lý</b></label>
-				  <input type="text" placeholder="Người quản lý..." name="nguoiquanly" required>
-
-				  <button type="submit" name="submit1">Submit</button>
-
-				<br/><br/>
-			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			 </div>
-			  </form>
-			</div>
+		
 		<div class="abc">
 		<div class="congcu">
 			<div class="maunen">
@@ -127,25 +112,12 @@
 					</form>				
 			</div> 
 			
-			<div class="dropdown"  >
-				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Tạo dự án</button>
-
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="update" >Cập nhật dự án</button>
-				<?php if(isset($_REQUEST['update'])){
-					header('location: updateProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="delete" >Xóa dự án</button>
-				<?php if(isset($_REQUEST['delete'])){
-					header('location: deleteProject.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
+			
+			
 			
 			
 			</div>
+		
 			<div class="ABCDE">
 			<div class="chuchay">
 					<td><marquee width="100%">N8Plus sẽ nghỉ Lễ vào 3 ngày 30/4, 1/5 và 2/5, kính chúc Quý Khách 1 kỳ nghỉ Lễ vui vẻ !!! >>>>></marquee></td>	
@@ -154,44 +126,56 @@
 				
 		<div class="body">	
 		<div class="ABCD"><h4></h4></div>
-		
-		<center><h2>Thông tin dự án</h2></center>
-		<br/><br/>
-		<center>
-			<?php
+			<center><h2>Thông tin thiết bị mượn trong dự án</h2></center>
+			<center>
+			
+				<?php
 				include('connection.php');
-				$sql = 'select * from project where User_ID="'.$name.'"';
+				$duan = $_REQUEST['duan'];
+				$sql = 'select * from borrow_request where Project_Name="'.$duan.'"';
 				$result = $conn->query($sql);
 				if($result->num_rows>0){
 					echo"<table>
 					<tr>
 						
+						<td>Mã mượn</td>
+						<td>Mã thiết bị</td>
 						<td>Tên dự án</td>
-						<td>Tài khoản người đăng ký</td>
-						<td>Người quản lý</td>
-						
+						<td>Ngày mượn</td>
+						<td>Ngày trả</td>
+						<td>Số lượng</td>
+						<td>Phê duyệt</td>
+						<td>Hành động</td>
 					</tr>";
 					while ($row=mysqli_fetch_array($result)){
+						$is_admin =($row['Confirm']===true)?"Đã duyệt":"Chưa duyệt";
 						echo"<tr>
 							
+							<td>".$row['Confirm_ID']."</td>
+							<td>".$row['Device_ID']."</td>
 							<td>".$row['Project_Name']."</td>
-							<td>".$row['User_ID']."</td>
-							<td>".$row['Representative']."</td>
+							<td>".$row['Borrow_Date']."</td>
+							<td>".$row['Expect_Date']."</td>
+							<td>".$row['Quantity']."</td>
 							
+							<td>".$is_admin."</td>
+							<td><a href='delete.php?STT=".$row['Project_Name']."'>Delete</a></td>
 							
 							</tr>";
 					}echo"		</table>";
+				}else{
+					echo'Không có thông tin ';
 				}
 				mysqli_close($conn);
+				
 				?>
 
 		</center>
-		
 		<style>table {
 					
 					border-collapse: collapse;
 					border-spacing: 0;
-					width: 70%;
+					width: 90%;
 					border: 2px solid #ddd;
 				}
 
@@ -202,9 +186,6 @@
 				}
 				tr:nth-child(even){background-color: #f2f2f2}
 			</style>
-		
-			</div>
-		
 		</div>
 		<div class="ass">
 			
