@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -105,7 +105,7 @@
 			  <form class="modal-content animate" method="post" action="<?php echo"luuduan.php?User_ID=".$name." "; ?>"  >
 				<div class="container12">
 				  <label><b>Tên dự án</b></label>
-				  <input type="text" placeholder="Tên dự án..." name="tenduan" required>
+				  <input type="text" placeholder="Tên dự án viết liền không dấu..." name="tenduan" required>
 				  
 				  <label><b>Người quản lý</b></label>
 				  <input type="text" placeholder="Người quản lý..." name="nguoiquanly" required>
@@ -181,6 +181,8 @@
 							
 							</tr>";
 					}echo"		</table>";
+				}else{
+					echo'Không có dữ liệu!!!!';
 				}
 				mysqli_close($conn);
 				?>

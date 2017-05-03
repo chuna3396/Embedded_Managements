@@ -3,7 +3,7 @@
 <head>
 
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -101,7 +101,7 @@
 				echo ''.$name;
 				?>]</button>
 				<?php if(isset($_REQUEST['dangxuat'])){
-					header('location:index.php');}?>	
+					header('location: index.php');}?>	
 					</form>				
 			</div> 
 			</div>
@@ -114,15 +114,10 @@
 			<div class="dropdown"  ><form method="post" >
 				<button class="dropbtn" name="trangchu" >Trang chủ</button>
 				<?php if(isset($_REQUEST['trangchu'])){
-					header('location:indexLG.php');}?>	
+					header('location: indexLG.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="quanlyduan" >Quản lý dự án</button>
-				<?php if(isset($_REQUEST['quanlyduan'])){
-					header('location:taoduan.php');}?>	
-					</form>				
-			</div> 
+		
 			
 			</div>
 			<div class="ABCDE">
@@ -433,7 +428,7 @@
 							?>
 						</td></tr></table>
 						</left>	</div>	
-						<table><tr><td colspan="2"><input type="number" name="points" min="1" max="100" placeholder="Số Lượng"></td></tr></table>	<br/><br/>
+						<table><tr><td colspan="2"><input type="number" name="points" min="1" max="10" placeholder="Số Lượng"></td></tr></table>	<br/><br/>
 				  		<button type="submit" name="submit1" >Submit</button>
 
 				<br/><br/>

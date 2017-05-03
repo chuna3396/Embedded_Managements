@@ -29,7 +29,8 @@
     cursor: pointer;
 	margin-top: 49px;
 	margin-right: -5px;
-}
+}	
+	
 	</style>
 </head>
 <body>
@@ -100,89 +101,97 @@
 			
 	
 		</div>
+		
 		<div class="abc">
 		<div class="congcu">
 			<div class="maunen">
 			<div class="dropdown"  ><form method="post" >
 				<button class="dropbtn" name="trangchu" >Trang chủ</button>
 				<?php if(isset($_REQUEST['trangchu'])){
-					header('location:indexLG.php?User_ID='.$name.'');}?>	
+					header('location: indexLG.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="capnhatthongtin" >Cập nhật thông tin</button>
-				<?php if(isset($_REQUEST['capnhatthongtin'])){
-					header('location: capnhatthongtin.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="capnhatthongtin1" >Cập nhật mật khẩu</button>
-				<?php if(isset($_REQUEST['capnhatthongtin1'])){
-					header('location: chanelpass.php');}?>	
-					</form>				
-			</div> 
+			
+			
+			
 			
 			
 			</div>
+		
 			<div class="ABCDE">
 			<div class="chuchay">
 					<td><marquee width="100%">N8Plus sẽ nghỉ Lễ vào 3 ngày 30/4, 1/5 và 2/5, kính chúc Quý Khách 1 kỳ nghỉ Lễ vui vẻ !!! >>>>></marquee></td>	
 			</div>	</div>
 			</div>	
 				
-		<div class="body">
-		
+		<div class="body">	
 		<div class="ABCD"><h4></h4></div>
-		<br/><br/><br/><br/><br/>
-			<center><?php
-						if(isset($_REQUEST['User_ID'])){
-						$user = $_REQUEST['User_ID'];
-						include('connection.php');
-						$sql="select * from user_info where User_ID ='".$user."'";
-						$result =$conn->query($sql);
-						if($result->num_rows>0){
-							echo"<table><tr>
-								<td><b>Tên người dùng</b></td>
-								<td><b>Ngày sinh</b></td>
-								<td><b>Giới tính</b></td>
-								<td><b>CMND</b></td>
-								<td><b>Số điện thoại</b></td>
-								<td><b>Email</b></td>
+			<center><h2></h2></center>
+			<center>
+			<form method="post" name="form1" >
+			<?php
+				if(isset($_REQUEST['Project_Name'])){
+				$IDproject = $_REQUEST['Project_Name'];
+				include('connection.php');
+				$sql = 'select * from project where Project_Name="'.$IDproject.'"';
+				$result = $conn->query($sql);
+				if($result->num_rows>0){
+					echo"<table>
+					<tr>
+						
+						<td>Tên dự án</td>
+						<td>Tài khoản người đăng ký</td>
+						<td>Người quản lý</td>
+						<td>Hành động</td>
+						
+					</tr>";
+					while ($row=mysqli_fetch_array($result)){
+						echo"<tr>
 							
-							</tr>
-							";
-							while ($row=mysqli_fetch_array($result)){
-								echo"<tr>		
-									<td> &emsp;".$row['User_Name']."</td>
-									<td> &emsp;".$row['Birthday']."</td>
-									<td> &emsp;".$row['Sex']."</td>
-									<td> &emsp;".$row['IDCard']."</td>
-									<td> &emsp;".$row['Phone']."</td>
-									<td> &emsp;".$row['Email']."</td>
-									
-								</tr>";
-							}echo"</table>";
+							
+							<td>".$IDproject."</td>
+							<td>".$row['User_ID']."</td>
+						
+							<td>".$row['Representative']."</td>
+							<td><input type='submit' name='submit1' value='Xóa'></td>
+							
+							</tr>";
+					}echo"		</table>";
+				}
+				
+				}
+					
+					if(isset($_REQUEST['submit1'])){
+						
+						$sql1 = "DELETE FROM violate WHERE Payment_ID = (SELECT Payment_ID from device_pay where Borrow_ID = (SELECT Borrow_ID from device_borrow where Project_Name = (SELECT Project_Name FROM project where Project_Name = '$IDproject' ))) ";
+						$result1 = $conn->query($sql1);
+						$sql4 = "DELETE FROM device_pay where Borrow_ID = (SELECT Borrow_ID from device_borrow where Project_Name = (SELECT Project_Name FROM project where Project_Name = '$IDproject' ))";
+						$result4 = $conn->query($sql4);
+						$sql5 = "DELETE FROM borrow_request WHERE Project_Name =(Select Project_Name from project where Project_Name = '$IDproject' ) ";
+						$result5 = $conn->query($sql5);
+						$sql2 = "DELETE FROM device_borrow WHERE Project_Name =(Select Project_Name from project where Project_Name = '$IDproject' ) ";
+						$result2 = $conn->query($sql2);
+						$sql3 = "DELETE FROM project WHERE Project_Name = '$IDproject'  ";
+						$result3 = $conn->query($sql3);
+						
+						
+						if($result3===true){
+							header('location: xemduan.php?User_ID='.$name.'');
+							
 						}else{
-							echo "0 result";
+							echo"tb";
 						}
 						mysqli_close($conn);
-							}
-						?>	
-						 
-						
-				  		
-							<br/>
-						
-						</center>
+					}
+					?></form>
+
+		</center>
 		
-		
-		
-		</div>
 		<style>table {
 					
 					border-collapse: collapse;
 					border-spacing: 0;
-					width: 90%;
+					width: 70%;
 					border: 2px solid #ddd;
 				}
 
@@ -193,6 +202,7 @@
 				}
 				tr:nth-child(even){background-color: #f2f2f2}
 			</style>
+		</div>
 		<div class="ass">
 			
 			<center>

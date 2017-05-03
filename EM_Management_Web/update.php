@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -149,7 +149,7 @@
 						echo"<tr>
 							
 							
-							<td><input type='text'  name='name' value='$row[Project_Name]'></td>
+							<td>".$IDproject."</td>
 							<td>".$row['User_ID']."</td>
 						
 							<td><input type='text'  name='nguoiquanly' value='$row[Representative]'></td>
@@ -168,14 +168,14 @@
 						
 						
 						
-						$sql2 = "UPDATE project SET Project_Name=".$pro.",Representative=".$nguoiquanly." WHERE Project_Name='$row[Project_Name]'";
+						$sql2 = "UPDATE project SET Representative='".$nguoiquanly."' WHERE Project_Name='$IDproject'";
 						$result2 = $conn->query($sql2);
 						
 						
 						
 						if($result2===true){
 							
-							echo  ' D';
+							header('location: xemduan.php?User_ID='.$name.'');
 							
 						}else{
 							echo"tb";

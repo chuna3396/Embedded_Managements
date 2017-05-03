@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -122,12 +122,40 @@
 					</form>				
 			</div> 
 			<div class="dropdown"  >
-				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý thiết bị mượn</button>
+				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý đơn yêu cầu đã gửi</button>
+	
+			</div> 
+			<div class="dropdown"  >
+				<button onclick="document.getElementById('id02').style.display='block' " class="dropbtn" name="taoduan" >Quản lý thiết bị đã mượn</button>
 	
 			</div> 
 			
 			<div id="id01" class="modal">
 			  <form class="modal-content animate" method="post" action="<?php echo"xemmuonthietbi.php?User_ID=".$name.""; ?>" >
+				<div class="container12">
+						<h2><center>Chọn dự án</center></h2>
+						<center>	<?php
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<form method="post" > <select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+									}echo"		</select></form>";
+								}
+								mysqli_close($conn);
+							?></center>
+				
+
+				<br/><br/>
+				<button type="submit" name="submit1">Select</button><br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
+			</div>
+			<div id="id02" class="modal">
+			  <form class="modal-content animate" method="post" action="<?php echo"quanly.php?User_ID=".$name.""; ?>" >
 				<div class="container12">
 						<h2><center>Chọn dự án</center></h2>
 						<center>	<?php
@@ -176,7 +204,7 @@
 						<div class="carousel-inner" role="listbox">
 
 						  <div class="item active">
-						  <a href="intro9.php">
+						  <a href='<?php echo"intro9LG.php?User_ID=".$name.""; ?>'>
 							<?php
 							  include('connection.php');
 								$imgID = 9;
@@ -214,7 +242,7 @@
 						  </div>
 
 						  <div class="item">
-						  <a href="intro12.php">
+						  <a href="<?php echo"intro12LG.php?User_ID=".$name.""; ?>">
 							<?php
 							  include('connection.php');
 								$imgID = 12;
@@ -253,7 +281,7 @@
 						  </div>
 
 						  <div class="item">
-						  	<a href="intro7.php"><?php
+						  	<a href="<?php echo"intro7LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 7;
 								$sql = "SELECT * FROM device_image WHERE Device_ID=" . $imgID;
@@ -292,7 +320,7 @@
 						  </div>
 
 						  <div class="item">
-						  <a href="intro3.php">
+						  <a href="<?php echo"intro3LG.php?User_ID=".$name.""; ?>">
 							<?php
 							  include('connection.php');
 								$imgID = 3;
@@ -351,7 +379,7 @@
 		<br/>
 		<center><table ><center>
 				<tr>
-					<td><div class="body2"><a href="intro1.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro1LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 1;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -364,7 +392,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro1.php"><?php
+								?></a><center><br/><a href="<?php echo"intro1LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -381,9 +409,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro1.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro1LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro2.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro2LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 2;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -396,7 +424,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro2.php"><?php
+								?></a><center><br/><a href="<?php echo"intro2LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -413,9 +441,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro2.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro2LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro3.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro3LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 3;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -428,7 +456,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro3.php"><?php
+								?></a><center><br/><a href="<?php echo"intro3LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -445,7 +473,7 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro3.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro3LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 				</tr>
 				<tr>
 					<td><div class="body1"></div></td>
@@ -453,7 +481,7 @@
 					<td><div class="body1"></div></td>
 				</tr>
 				<tr>
-					<td><div class="body2"><a href="intro4.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro4LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 4;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -466,7 +494,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro4.php"><?php
+								?></a><center><br/><a href="<?php echo"intro4LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -483,9 +511,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro4.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro4LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro5.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro5LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 5;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -498,7 +526,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro5.php"><?php
+								?></a><center><br/><a href="<?php echo"intro5LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -515,9 +543,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro5.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro5LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro6.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro6LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 6;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -530,7 +558,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro6.php"><?php
+								?></a><center><br/><a href="<?php echo"intro6LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -547,7 +575,7 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro6.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro6LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 				</tr>
 				<tr>
 					<td><div class="body1"></div></td>
@@ -555,7 +583,7 @@
 					<td><div class="body1"></div></td>
 				</tr>
 				<tr>
-					<td><div class="body2"><a href="intro7.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro7LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 7;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -568,7 +596,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro7.php"><?php
+								?></a><center><br/><a href="<?php echo"intro7LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -585,9 +613,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro7.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro7LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro8.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro8LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 8;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -600,7 +628,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro8.php"><?php
+								?></a><center><br/><a href="<?php echo"intro8LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -617,9 +645,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro8.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro8LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro9.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro9LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 9;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -632,7 +660,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro9.php"><?php
+								?></a><center><br/><a href="<?php echo"intro9LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -649,7 +677,7 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro9.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro9LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 				</tr>
 				<tr>
 					<td><div class="body1"></div></td>
@@ -657,7 +685,7 @@
 					<td><div class="body1"></div></td>
 				</tr>
 				<tr>
-					<td><div class="body2"><a href="intro10.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro10LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 10;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -670,7 +698,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro10.php"><?php
+								?></a><center><br/><a href="<?php echo"intro10LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -687,9 +715,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro10.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro10LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro11.php"><?php
+						<td><div class="body2"><a href="<?php echo"intro11LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 11;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -702,7 +730,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro12.php"><?php
+								?></a><center><br/><a href="<?php echo"intro11LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -719,9 +747,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro12.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro11LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro12.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro12LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 12;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -734,7 +762,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro12.php"><?php
+								?></a><center><br/><a href="<?php echo"intro12LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -751,7 +779,7 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro12.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro12LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 				</tr>
 				<tr>
 					<td><div class="body1"></div></td>
@@ -759,7 +787,7 @@
 					<td><div class="body1"></div></td>
 				</tr>
 			<tr>
-					<td><div class="body2"><a href="intro13.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro13LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 13;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -772,7 +800,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro13.php"><?php
+								?></a><center><br/><a href="<?php echo"intro13LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -789,9 +817,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro13.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro13LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro14.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro14LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 14;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -804,7 +832,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro14.php"><?php
+								?></a><center><br/><a href="<?php echo"intro14LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -821,9 +849,9 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro14.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro14LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 					<td>&emsp;&emsp;&emsp;&emsp;</td>
-					<td><div class="body2"><a href="intro15.php"><?php
+					<td><div class="body2"><a href="<?php echo"intro15LG.php?User_ID=".$name.""; ?>"><?php
 							  include('connection.php');
 								$imgID = 15;
 								$sql = "SELECT Image_Url FROM device_image WHERE Device_ID=" . $imgID;
@@ -836,7 +864,7 @@
 									echo '<img src='.$imgData.' width="240" height="115"/>';
 								} 
 							  mysqli_close($conn);
-								?></a><center><br/><a href="intro15.php"><?php
+								?></a><center><br/><a href="<?php echo"intro15LG.php?User_ID=".$name.""; ?>"><?php
 							include('connection.php');
 							$sql="select * from device where Device_ID='".$imgID."'";
 							$result =$conn->query($sql);
@@ -853,7 +881,7 @@
 								echo "0 result";
 							}
 							mysqli_close($conn);
-						?><input type="button" onclick="intro15.php" name="xem" value="Mượn"></a></center></div></td>
+						?><input type="button" onclick="<?php echo"intro15LG.php?User_ID=".$name.""; ?>" name="xem" value="Mượn"></a></center></div></td>
 				</tr>
 				
 			</center></table></center>

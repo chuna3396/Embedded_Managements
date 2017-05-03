@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -111,8 +111,47 @@
 					header('location: indexLG.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
-			
-			
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="thongtin" >Thông tin tài khoản</button>
+				<?php if(isset($_REQUEST['thongtin'])){
+					header('location: thongtin.php?User_ID='.$name.'');}?>	
+					</form>				
+			</div> 
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="quanlyduan" >Quản lý dự án</button>
+				<?php if(isset($_REQUEST['quanlyduan'])){
+					header('location: xemduan.php?User_ID='.$name.'');}?>	
+					</form>				
+			</div> 
+			<div class="dropdown"  >
+				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý thiết bị mượn</button>
+	
+			</div> 
+				
+			<div id="id01" class="modal">
+			  <form class="modal-content animate" method="post" action="<?php echo"xemmuonthietbi.php?User_ID=".$name.""; ?>" >
+				<div class="container12">
+						<h2><center>Chọn dự án</center></h2>
+						<center>	<?php
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<form method="post" > <select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+									}echo"		</select></form>";
+								}
+								mysqli_close($conn);
+							?></center>
+				
+
+				<br/><br/>
+				<button type="submit" name="submit1">Select</button><br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
+			</div>
 			
 			
 			
@@ -149,28 +188,13 @@
 							<td>".$row['Project_Name']."</td>
 							<td>".$row['User_ID']."</td>
 							<td>".$row['Representative']."</td>
-							<td><input type='submit' name='submit1' value='Xóa'></td>
+							<td><a href='deletepro.php?User_ID=".$name."&Project_Name=".$row['Project_Name']."'>Xóa</a></td>
 							
 							</tr>";
 					}echo"		</table>";
 				}
 				mysqli_close($conn);
-				if(isset($_REQUEST['submit1'])){
-						include('connection.php');
-						$sql1 = 'DELETE FROM project WHERE Project_Name = '.$row['Project_Name'].'';	
-					
-						$result1 = $conn->query($sql1);
-						
-						
-						
-						
-						if($result1===true){
-							header('location: xemduan.php?User_ID='.$name.'');
-						}else{
-							echo"tb ".$row['Project_Name'];
-						}
-						mysqli_close($conn);
-					}
+				
 				
 				
 				

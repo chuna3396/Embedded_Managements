@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -111,7 +111,48 @@
 					header('location: indexLG.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
-			
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="thongtin" >Thông tin tài khoản</button>
+				<?php if(isset($_REQUEST['thongtin'])){
+					header('location: thongtin.php?User_ID='.$name.'');}?>	
+					</form>				
+			</div> 
+			<div class="dropdown"  ><form method="post" >
+				<button class="dropbtn" name="quanlyduan" >Quản lý dự án</button>
+				<?php if(isset($_REQUEST['quanlyduan'])){
+					header('location: xemduan.php?User_ID='.$name.'');}?>	
+					</form>				
+			</div> 
+			<div class="dropdown"  >
+				<button onclick="document.getElementById('id01').style.display='block' " class="dropbtn" name="taoduan" >Quản lý thiết bị mượn</button>
+	
+			</div> 
+				
+			<div id="id01" class="modal">
+			  <form class="modal-content animate" method="post" action="<?php echo"xemmuonthietbi.php?User_ID=".$name.""; ?>" >
+				<div class="container12">
+						<h2><center>Chọn dự án</center></h2>
+						<center>	<?php
+								include('connection.php');
+								$sql = 'select * from project where User_ID="'.$name.'"';
+								$result = $conn->query($sql);
+								if($result->num_rows>0){
+									echo'<form method="post" > <select name="duan">';
+									while ($row=mysqli_fetch_array($result)){
+										echo" <option value=".$row['Project_Name'].">".$row['Project_Name']."</option>";
+										
+									}echo"		</select></form>";
+								}
+								mysqli_close($conn);
+							?></center>
+				
+
+				<br/><br/>
+				<button type="submit" name="submit1">Select</button><br/><br/>
+			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			 </div>
+			  </form>
+			</div>
 			
 			
 			
@@ -126,7 +167,7 @@
 				
 		<div class="body">	
 		<div class="ABCD"><h4></h4></div>
-			<center><h2>Thông tin thiết bị mượn trong dự án</h2></center>
+			<center><h2>Quản lý đơn yêu cầu mượn thiết bị</h2></center>
 			<center>
 			
 				<?php
@@ -148,7 +189,7 @@
 						<td>Hành động</td>
 					</tr>";
 					while ($row=mysqli_fetch_array($result)){
-						$is_admin =($row['Confirm']===true)?"Đã duyệt":"Chưa duyệt";
+						$is_admin =($row['Confirm']==='1')?"Đã duyệt":"Chưa duyệt";
 						echo"<tr>
 							
 							<td>".$row['Confirm_ID']."</td>
@@ -159,7 +200,7 @@
 							<td>".$row['Quantity']."</td>
 							
 							<td>".$is_admin."</td>
-							<td><a href='delete.php?STT=".$row['Project_Name']."'>Delete</a></td>
+							<td><a href='delete.php?STT=".$row['Confirm_ID']."&User_ID=".$name."'>Delete</a></td>
 							
 							</tr>";
 					}echo"		</table>";

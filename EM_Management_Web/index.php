@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Embedded Management</title>
 	
 	<link rel="stylesheet" type="text/css" href="styleanhdong.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -106,7 +106,7 @@
 
 				<br/><br/>
 			 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			<span class="psw">Forgot <a href="#">password?</a></span> </div>
+			<span class="psw">Chanel <a href="chanelpass.php">password?</a></span> </div>
 			  </form>
 			</div>
 				<div id="id02" class="modal">
@@ -117,8 +117,8 @@
 				<label><b>Ngày sinh: </b></label>
 				  <input type="date" placeholder="Nhập tên" name="date" required>
 				    <label><b>Giới tính: </b></label>
-				  <center><table><tr><td><input type="radio" name="gender" value="Nam"> Nam<br>
-  				 </td><td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td><td> <input type="radio" name="gender" value="Nữ"> Nữ<br></td></tr></table></center>
+				  <left><table><tr><td><input type="radio" name="gender" value="Nam"> Nam<br>
+  				 </td><td>&emsp;&emsp;&emsp;&emsp;&emsp;</td><td> <input type="radio" name="gender" value="Nữ"> Nữ<br></td></tr></table></left>
 				  <label><b>Chứng minh nhân dân:</b></label>
 				  <input type="number" placeholder="Chứng minh nhân dân" name="cmndd" required>
 				  <label><b>Số điện thoại:</b></label>

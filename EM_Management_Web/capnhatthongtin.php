@@ -17,7 +17,12 @@
 		margin-top: 10px;
 			
 		}
-	
+	.but{
+			float: right;
+			width: 55.3%;
+			height: 100px;
+			margin-right:22.3% ;
+		}
 	</style>
 	<style>
 	.dropbtn1 {
@@ -110,15 +115,9 @@
 					</form>				
 			</div> 
 			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="capnhatthongtin" >Cập nhật thông tin</button>
+				<button class="dropbtn" name="capnhatthongtin" >Thông tin tài khoản</button>
 				<?php if(isset($_REQUEST['capnhatthongtin'])){
-					header('location: capnhatthongtin.php?User_ID='.$name.'');}?>	
-					</form>				
-			</div> 
-			<div class="dropdown"  ><form method="post" >
-				<button class="dropbtn" name="capnhatthongtin1" >Cập nhật mật khẩu</button>
-				<?php if(isset($_REQUEST['capnhatthongtin1'])){
-					header('location: chanelpass.php');}?>	
+					header('location: thongtin.php?User_ID='.$name.'');}?>	
 					</form>				
 			</div> 
 			
@@ -134,41 +133,62 @@
 		
 		<div class="ABCD"><h4></h4></div>
 		<br/><br/><br/><br/><br/>
-			<center><?php
+			<center>
+					<form method="post" ><?php
 						if(isset($_REQUEST['User_ID'])){
 						$user = $_REQUEST['User_ID'];
 						include('connection.php');
 						$sql="select * from user_info where User_ID ='".$user."'";
 						$result =$conn->query($sql);
 						if($result->num_rows>0){
-							echo"<table><tr>
-								<td><b>Tên người dùng</b></td>
-								<td><b>Ngày sinh</b></td>
-								<td><b>Giới tính</b></td>
-								<td><b>CMND</b></td>
-								<td><b>Số điện thoại</b></td>
-								<td><b>Email</b></td>
-							
-							</tr>
+							echo"<table>
 							";
 							while ($row=mysqli_fetch_array($result)){
-								echo"<tr>		
-									<td> &emsp;".$row['User_Name']."</td>
-									<td> &emsp;".$row['Birthday']."</td>
-									<td> &emsp;".$row['Sex']."</td>
-									<td> &emsp;".$row['IDCard']."</td>
-									<td> &emsp;".$row['Phone']."</td>
-									<td> &emsp;".$row['Email']."</td>
+								echo"		
 									
-								</tr>";
+									<tr><td><b>Tên người dùng</b></td><td><input type='text'size='7'  name='ten' value='$row[User_Name]'></td></tr>
+									<tr><td><b>Ngày sinh</b></td><td><input type='text'size='3'  name='ngaysinh' value='$row[Birthday]'></td></tr>
+									
+  				 					<tr><td><b>Giới tính</b></td><td><select name='gioitinh'>
+																			<option value='Nam'>Nam</option>
+																			<option value='Nữ'>Nữ</option> </select></td></tr>
+									<tr><td><b>CMND</b></td><td><input type='text'size='2'  name='cmnd' value='$row[IDCard]'></td></tr>
+									<tr><td><b>Số điện thoại</b></td><td><input type='text'size='2'  name='sdt' value='$row[Phone]'></td></tr>
+									<tr><td><b>Email</b></td><td><input type='text'size='2'  name='email' value='$row[Email]'></td></tr>
+									<tr><td colspan='2'><button  name='ok' >Thay đổi</button></td></tr>
+								";
 							}echo"</table>";
 						}else{
 							echo "0 result";
 						}
-						mysqli_close($conn);
+						
 							}
-						?>	
-						 
+						if(isset($_REQUEST['ok'])){
+							$ten = $_REQUEST['ten'];
+							$ngaysinh  = $_REQUEST['ngaysinh'];
+							$gioitinh = $_REQUEST['gioitinh'];
+							$cmnd = $_REQUEST['cmnd'];
+							$sdt = $_REQUEST['sdt'];
+							$email = $_REQUEST['email'];
+						
+						
+							$sql2 = "UPDATE user_info SET User_Name='".$ten."',Birthday='".$ngaysinh."',Sex='".$gioitinh."',IDCard='".$cmnd."',Phone='".$sdt."',Email='".$email."'  WHERE User_ID='$user'";
+							$result2 = $conn->query($sql2);
+							if($result2===true){
+								header('location: thongtin.php?User_ID='.$name.'');
+							}else{
+							echo"tb";
+							}
+						mysqli_close($conn);
+					}
+					?></form>
+						
+						<div class="but"> <form method="post" >
+					<button  name="capnhatthongtin" >Cancel</button>
+					<?php if(isset($_REQUEST['capnhatthongtin'])){
+						header('location: thongtin.php?User_ID='.$name.'');}?>	
+						</form>		</div>		
+			
 						
 				  		
 							<br/>
@@ -182,7 +202,7 @@
 					
 					border-collapse: collapse;
 					border-spacing: 0;
-					width: 90%;
+					width:57%;
 					border: 2px solid #ddd;
 				}
 
